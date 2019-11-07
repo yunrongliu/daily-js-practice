@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <button id="test">click</button>
+  <script>
+    var test = document.getElementById('test')
+    var util = {
+      bind: function(fn,context){
+        return function(){
+          console.log('arguments',arguments)
+          console.log('callee',arguments.callee)
+          fn.apply(context,arguments)
+        }
+      }
+    }
+
+    var handle = {
+      message: "exec",
+      handleClick: function(ev){
+        console.log(ev)
+        console.log(this)
+        console.log(this.message)
+      }
+    }
+    
+    window.onload = function(){
+      // test.onclick = function(ev){
+      //   handle.handleClick(ev)
+      // } 
+      test.onclick = util.bind(handle.handleClick,handle)
+    }
+
+     
+  </script>
+</body>
+</html>
