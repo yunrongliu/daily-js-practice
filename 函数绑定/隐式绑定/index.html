@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <button id="test">click</button>
+  <script>
+    /*!!!请在chrome上测试*/
+    /*
+    *这一节主要涉及隐式绑定
+    *隐式绑定是this绑定的一类
+    *当对象的一个属性（prop）指向了一个函数的时候，在通过prop调用时，函数的this指向对象
+    *需要注意的是此函数并不属于此对象，只是将地址复制了一份，所以将prop赋值给另一个对象时，会造成绑定丢失
+    */
+    let test = document.getElementById('test') //测试button对象
+
+    //测试对象  处理对象
+    let handle = {
+      message: "exec",
+      handleClick: function(ev){
+        console.log(this)
+        console.log(this.message)
+      }
+    }
+    
+    window.onload = function(){
+      test.onclick = handle.handleClick //将handle对象的handleClick属性赋值给test对象的onclick属性
+      //发生隐式绑定 
+      //handle.handleClick保存的是 匿名函数的引用
+      //所以在调用时 this绑定的是test 而test不具备message属性 所以打印undefined
+      /*
+      *log
+      * <button id="test">click</button>
+      * undefined
+      * 当然 如果test具备message属性，则打印对应的属性
+      */
+
+      //解决方式 1 消除隐式绑定
+      test.onclick = function(ev){
+        handle.handleClick(ev)
+      } 
+
+      //解决方式 2 强制硬绑定对应的对象
+      let util = {
+        //简易的绑定函数，实际场景中 bind函数还需要增加判断和拓展
+        bind: function(fn,context){
+          return function(){
+            fn.apply(context,arguments)
+          }
+        }
+      }
+      test.onclick = util.bind(handle.handleClick,handle)
+    }
+
+    /*
+    *另外一种情况是将引用赋值给全局变量，如下
+    */
+    let yn = handle.handleClick
+    yn()
+    /*log
+    * window
+    * undefined
+    */
+    //this绑定到window是相同的原理，yn是window的属性
+    //等同于 window.yn == handle.handleClick
+
+
+    /*summary
+    *
+    */
+  </script>
+</body>
+</html>
