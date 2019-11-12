@@ -15,6 +15,8 @@
 
     let [constructor,...args] = [...arguments]
 
+    console.log(constructor.prototype)
+
     thisObj = Object.create(constructor.prototype) 
 
     let result = constructor.apply(thisObj,args)
@@ -39,10 +41,11 @@
 }
 
 /**总结
- * new 在js中 可以用来创建构造函数生成的对象 也可以用于继承
- * 简单来说 JavaScript大部分底层的操作都和原型有关
- * 在js中无论使用任何模式去实现继承，都绕不开prototype和constructor，因为继承的本质是复制还不是查找
- * 而这种伪继承 起始增加了理解难度 以及 麻烦的原型指向
- * 所以个人更推荐 直接使用委托，从概念上来说，所有类都是平级的关系  有的只有委托的关系
- * 委托的本质 就是 原型链的延伸
+ * new 的 功能大概是这样  但是原生new 在使用时 还有一些附加的作用 
+ * 可以看到  js中的new  和 其他语言是不一样的
+ * new操作符 后面是个函数 （其实只要是function类型的就可以，如对象的constructor属性(但不推荐使用)） 
+ * 只有被new 调用的函数 才可以理解为构造函数
+ * 而 new 的本质 只是创建了一个对象 然后将构造函数的原型委托给该对象而已 不存在复制
+ * 所以js 中不存在继承这个概念 只有原型委托 而原型委托的本质 其实就是 在原型链上的一次查找（左查询 和 右查询 的情况还有些许不同）
+ * 
  */
