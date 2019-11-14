@@ -35,12 +35,20 @@
   /**
    * Symbol.toPrimitive 最好理解的一版
    */
-  let a = {
-    [Symbol.toPrimitive] : (function(){
-      let i = 1
-      return () => i++
-    })()
-  }
+  // let a = {
+  //   [Symbol.toPrimitive] : (function(){
+  //     let i = 1
+  //     return () => i++
+  //   })()
+  // }
 
-  console.log((a == 1 && a == 2 && a == 3))
+  // console.log((a == 1 && a == 2 && a == 3))
+
+  /**
+   * 重写join
+   */
+  let a = [1,2,3]
+  a.join = a.shift
+  console.log(a == 1)
+  // console.log((a == 1 && a == 2 && a == 3))
 }
