@@ -14,11 +14,11 @@
    console.log("1" == 1) //true
    console.log("1d" == 1) //false
 
-   //3.数字 字符串 和对象相比较 对象使用valueOf 或 toString进行比较 数组也是个对象 这个是很关键的
-   //如果是数组的话 无论比较的是字符串还是数字都调用toString方法
-   //数组调用toString方法又会间接调用join方法,而我们可以修改join的属性,所以可以完成一些沙雕操作
+   //3.数字 字符串 和对象相比较 ，无论是数字还是字符串 对象会优先使用valueOf，然后再用toString  数组也是个对象 这个是很关键的
+   //数组调用toString方法又会间接调用join方法,而我们可以修改join的属性,所以可以完成一些沙雕操作,当然建立在valueOf没有被重写的情况下
+   //我大胆的猜测一下：原因是Object.valueOf实现的比较特殊，如果我们修改了对象的valueOf，其实是屏蔽了Object的valueOf的，所以会导致toString用不了
+   //纯属瞎猜
   let arr = [1,2,3]
-
   console.log(arr == '1,2,3') //true
 
   arr.join = arr.shift //shift 从数组头部删除一个元素  js 的数组 是非常灵活的 

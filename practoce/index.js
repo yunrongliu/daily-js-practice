@@ -45,7 +45,7 @@
   // console.log((a == 1 && a == 2 && a == 3))
 
   /**
-   * 重写join
+   * 重写join  这里的原理可以看下双等于号转换规则
    */
   let a = [1,2,3]
   a.join = a.shift

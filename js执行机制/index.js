@@ -14,7 +14,7 @@
    *    任务队列分为宏任务和微任务，共同性是都是异步
    *    异步任务会被送进任务注册表（event table）进行函数注册，注册好了 送进任务队列
    *    宏任务包括（script，setTimeOut,setInterval,requestAnimationFrame(做动画的),I/O,UI交互，postMessage，MessageChannel（在worker中使用的））
-   *    微任务包括（Promise.then catch finally，MutationObserve(观察dom的)）Object.observe已被废弃，由proxy代替
+   *    微任务包括（Promise.then .catch .finally，MutationObserve(观察dom的)）Object.observe已被废弃，由proxy代替
    *    宏任务就是浏览器实现的，由浏览器单开线程维护
    *    微任务储存在微任务队列中由js引擎维护
    * 
@@ -24,6 +24,7 @@
    *     任务队列执行后得到的可执行函数会被推入回调队列等待执行
    *     比如setTimeOut(fn,3) 代码会在任务队列中执行3秒，得到的可执行函数fn会被推入回调队列。
    *     fn的具体执行情况要由执行环境绝定
+   *     回调队列是先入先出的
    * 
    *  4.事件循环（经常被问的event loop本loop）
    *    概念：每一个js线程都由一个独立的event loop
@@ -53,7 +54,7 @@
    * async 可以等同理解为promise ， 属于微任务 但是如果async 里面有 await  且 await  后面的函数返回的是个promise 那么 await 会阻塞代码执行
    * 所以如果没有await  或者 await等的不是一个promise  那么 就可以等同于一个同步代码
    */
-  //附上一道小习题，如果理解了 使非常简单的  
+  //附上一道小习题，如果理解了 是非常简单的  
   let a = 3
 
   setTimeout(() => {
