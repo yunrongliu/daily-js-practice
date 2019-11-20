@@ -54,6 +54,9 @@
 
    function resolve(value){
      console.log('status',_self.status)
+     console.log('resolve: _self',_self)
+     console.log('resolve: _self.name',_self.name)
+     console.log('resolve p3',p3)
      if(_self.status === 'pending'){
        setTimeout(() => {
         console.log('times')
@@ -132,6 +135,7 @@
    //判断then方法传入的参数是否是个function，如果不是则直接忽略 
    console.log(_self.status)
 
+   console.log('judgeFlag',judgeFunc(onResolve) === flag)
    onResolve = judgeFunc(onResolve) === flag ? onResolve : function(value){return value} //return value的原因是可以让值一直传递
    onReject = judgeFunc(onReject) === flag ? onReject : function(value){return value}
 
@@ -142,9 +146,15 @@
       return retPromise = new myPromise((resolve,reject) => {
         console.log('beforeResolve','  resolveCallbackCol push')
         _self.resolveCallbackCol.push(function(value){
-          try {
-            console.log('afterResolve')
+        console.log('nowStatus',_self.status)
+        console.log('newName',_self.name)  
+        try {
+            console.log('enter try catch')
+            console.log('try now _self',_self)
+            console.log('try p3',p3)
+            console.log('onResolve',onResolve)
             let result = onResolve(_self.result) //先拿到返回值
+            console.log('onResolve next p3',p3)
             console.log('pending result',result)
             console.log(_self.result)
             dealMyPromise(retPromise,result,resolve,reject)
@@ -217,15 +227,20 @@
      resolve('111')
    }, 4);
  })
+ p1.name = 'p1'
 
- let p3
+ let p3 = {}
+ p3.name = 'p3'
 
  let p2 = p1.then((data)=> {
-   p3 = new myPromise((resolve,reject)=> {
+   p3.promise = new myPromise((resolve,reject)=> {
+     console.log('ddd',2222)
      resolve('222')
    })
-   return p3
+   return p3.promise
  })
+
+ p2.name = 'p2'
 
  p2.then((data)=> {
    console.log('ccc',data)
