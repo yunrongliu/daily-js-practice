@@ -10,7 +10,7 @@
  * 
  * promise构造函数接收一个executor函数
  * executor是带有resolve和reject俩个参数的函数
- * promise会立即执行executor函数，所以Promise函数内部是同步代码，then,catch,finally是异步的
+ * promise会立即执行executor函数，所以Promise函数内部是同步代码，then,catch,finally是异步的（但then的实现中只是将返回的函数体内设为异步，其余的还是同步的）
  * 
  * promise的then方法和catch也返回一个promise，所以可以进行链式调用
  * 但如果整个异步流程过于复杂的话，promise会把问题变得更复杂
@@ -53,11 +53,13 @@
    const _self = this //保存上下文
 
    function resolve(value){
+     console.log('status',_self.status)
      if(_self.status === 'pending'){
        setTimeout(() => {
+        console.log('times')
         _self.status = 'fulfilled' //将状态置为完成
         _self.result = value //将传入的value作为解释
- 
+        console.log(_self.resolveCallbackCol)
         _self.resolveCallbackCol.forEach( cb => cb(value))
        }, 4);
        
@@ -67,6 +69,7 @@
    function reject(value){
      if(_self.status === 'pending'){
        setTimeout(() => {
+        console.log('times')
         _self.status = 'rejected' //将状态置为拒绝
         _self.result = value //将传入的value作为解释
  
@@ -83,6 +86,36 @@
    }
  }
 
+ /**
+  * 处理then返回值
+  * @param {myPromise} retPromise then方法返回的myPromise对象
+  * @param {any} retValue resolve或reject得到的结果
+  * @param {function} resolve retPromise的resolve方法
+  * @param {function} reject retPromise的reject方法
+  */
+ function dealMyPromise(retPromise,retValue,resolve,reject){
+    console.log('dealMyPromise exec!')
+    //如果返回的自身 抛出错误
+    if(retPromise === retValue){
+      throw new Error('Cycle Reference!Can not return self!')
+    }
+
+    if(retValue instanceof myPromise){ //如果是myPromise的实例
+      // if(retValue.status === 'pending'){ //且状态为pending状态,先注册then方法，然后等待执行
+      //   retValue.then(result => { 
+      //     dealMyPromise(retPromise,result,resolve,reject)
+      //   },error => {
+      //     reject(error)
+      //   })
+      // }else{//如果不是pending，直接注册执行
+      //   retValue.then(resolve,reject)
+      // }
+      retValue.then(resolve,reject) //注册then
+    }else{//如果是普通的值
+      resolve(retValue) //直接resolve
+    }
+ }
+
  //实现then方法
  myPromise.prototype.then = function(onResolve,onReject){
    //保存上下文
@@ -97,78 +130,86 @@
    let retPromise = null
 
    //判断then方法传入的参数是否是个function，如果不是则直接忽略 
+   console.log(_self.status)
+
    onResolve = judgeFunc(onResolve) === flag ? onResolve : function(value){return value} //return value的原因是可以让值一直传递
    onReject = judgeFunc(onReject) === flag ? onReject : function(value){return value}
 
    //判断传入的状态，设置要返回的promise
    //优化if 把最有可能的放到前面
+   if(_self.status === 'pending'){
+    //如果状态还是处于pending的 其实和构造函数差不多 需要往完成和拒绝俩个回调队列里面推入对应的回调函数
+      return retPromise = new myPromise((resolve,reject) => {
+        console.log('beforeResolve','  resolveCallbackCol push')
+        _self.resolveCallbackCol.push(function(value){
+          try {
+            console.log('afterResolve')
+            let result = onResolve(_self.result) //先拿到返回值
+            console.log('pending result',result)
+            console.log(_self.result)
+            dealMyPromise(retPromise,result,resolve,reject)
+
+          } catch (error) {
+            reject(error) //如果抛出错误，那么以错误作为解释
+          }
+        })
+
+        _self.rejectCallbackCol.push(function(value){
+          try {
+            let result = onReject(_self.result) //先拿到返回值
+            dealMyPromise(retPromise,result,resolve,reject)
+
+          } catch (error) {
+            reject(error) //如果抛出错误，那么以错误作为解释
+          }
+        })
+      })
+
+      
+    }
+
    if(_self.status === 'fulfilled'){
      return retPromise = new myPromise((resolve,reject) => {
-       try {
-         let result = onResolve(_self.data) //执行，取得返回结果
-         if(result.isPrototypeOf(myPromise)){
-           result.then(resolve,reject)
-         }else{
-           resolve(result)
-         }
-       } catch (error) {
-         reject(error)
-       }
+      setTimeout(() => {
+        try {
+          let result = onResolve(_self.result) //执行，取得返回结果
+          console.log('fulfilled result',result)
+          dealMyPromise(retPromise,result,resolve,reject)
+        } catch (error) {
+          reject(error)
+        }
+      }, 4);
      })
    }
 
    if(_self.status === 'rejected'){
      return retPromise = new  myPromise((resolve,reject) => {
-       try {
-         let result = onReject(_self.data)
-         if(result.isPrototypeOf(myPromise)){
-           result.then(resolve,reject)
-         }else{
-           resolve(result)
-         }
-       } catch (error) {
-        reject(error)
-       }
+       setTimeout(() => {
+        try {
+          let result = onReject(_self.result)
+          dealMyPromise(retPromise,result,resolve,reject)
+        } catch (error) {
+         reject(error)
+        }
+       }, 4);
      })
    }
 
-   
-   if(_self.status === 'pending'){
-    //如果状态还是处于pending的 其实和构造函数差不多 需要往完成和拒绝俩个回调队列里面推入对应的回调函数
-    return retPromise = new myPromise((resolve,reject) => {
-
-      _self.resolveCallbackCol.push(function(value){
-        try {
-          let result = onResolve(_self.data) //先拿到返回值
-          if(result.isPrototypeOf(myPromise)){ //如果返回值是一个promise
-            result.then(resolve,reject) //那么返回的promise对象的解释就是此时的解释
-          }else{          
-            resolve(result) //如果不是，那么以返回值作为promise的解释
-          }
-
-        } catch (error) {
-           reject(error) //如果抛出错误，那么以错误作为解释
-        }
-      })
-
-      self.rejectCallbackCol.push(function(value){
-        try {
-          let result = onReject(_self.data) //先拿到返回值
-          if(result.isPrototypeOf(myPromise)){ //如果返回值是一个promise
-            result.then(resolve,reject) //那么返回的promise对象的解释就是此时的解释
-          }else{          
-            resolve(result) //如果不是，那么以返回值作为promise的解释
-          }
-
-        } catch (error) {
-           reject(error) //如果抛出错误，那么以错误作为解释
-        }
-      })
-    })
-
-    
-  }
  }
+
+ //所以整体promise的流程应该是这样
+ /**
+  * 第一步 立即执行promise传入的executor函数，所以promise的executor是同步代码
+  * 第二步 如果调用resolve或者reject 就执行对应的方法，但由于resolve和reject是异步的，所以会被推入任务队列，不会立即执行，所以调用then时的状态不是更新后的
+  * 第三步 调用then then会判断状态，所以第一次调用then时状态一定时pending，所以会触发pending的条件，将函数推入到对应的状态队列中
+  * 第四步 因为此时同步代码已经没了，所以会调用任务队列中的任务，就是调用resolve或者reject 然后此时改变状态，然后再去执行对应状态队列中的函数
+  * 
+  * 需要注意的是被推入状态队列的函数 应该处理几种情况
+  *  （不考虑处理兼容其他promise库，只是为了讲解原理，因为这里本来就有点绕，所以还是简单为好）
+  *   1.如果返回的是这个promise本身，那么应该抛出错误，因为这样会导致循环引用
+  *   2.如果返回的是一个promise，那么应该注册这个promise的then方法，就是用这个promise调用一遍then方法
+  *   
+  */
 
  let p1 = new myPromise((resolve,reject) => {
    setTimeout(() => {
@@ -177,17 +218,66 @@
    }, 4);
  })
 
- let p2 = new myPromise((resolve,reject) => {
-   setTimeout(() => {
-     console.log('p2')
+ let p3
+
+ let p2 = p1.then((data)=> {
+   p3 = new myPromise((resolve,reject)=> {
      resolve('222')
-   }, 5);
+   })
+   return p3
  })
 
- p1.then((data)=>{
-   console.log(data)
+ p2.then((data)=> {
+   console.log('ccc',data)
  })
 
- p2.then((data)=>{
-  console.log(data)
-})
+ /**在方法里面打印了一些标记方便我们分析，然后我们逐行分析代码运行，建议用vscode双屏分析
+  * 运行结果如下：
+  * 
+  * 
+  * pending //因为p1 executor里面是一段setTimeOut，所以代码会被推入任务队列。所以执行 p1 的 then 方法 在此打印了pending
+    beforeResolve   resolveCallbackCol push //因为状态时pending，所以在此打印 标识着p1的 resolveCallbackCol 和 rejectCallbackCol 都被推入了一个对应的函数
+    pending //然后调用第二个then方法 继续判断 p1的状态，因为此时resolve还未执行，所以状态pending （其实不用setTimeOut模拟异步，resolve里的状态也还是未更新的，因为resolve是异步的）
+    beforeResolve   resolveCallbackCol push //然后向p2的队列里面推入对应的函数
+    p1 //执行setTimeOut 打印p1
+    status pending //执行resolve方法 打印此时的状态
+    times //打印times
+    [ [Function] ] //打印队列中的函数
+    afterResolve //执行函数
+    status pending //再调用一遍resolve方法 因为是异步的，所以延迟执行
+    result myPromise { //打印result 第一个then里面 返回的是一个myPromise
+      status: 'pending',
+      resolveCallbackCol: [],
+      rejectCallbackCol: [],
+      result: null }
+    111 //打印上一次resolve的值
+    dealMyPromise exec! //调用dealMyPromise方法
+    pending  //因为是一个myPromise的实例，继续调用then方法，此时的状态是pending
+    beforeResolve   resolveCallbackCol push //推入对应的数组
+    times //执行p3的resolve方法，实际上调用then方法里面被推入的方法
+    [ [Function] ] //打印p3的函数
+    afterResolve // 执行函数
+    status pending //p3又调用了一次resolve，继续被推入队列，等待执行
+    result undefined //因为并没有返回结果 所以未undefined
+    222 //输出上一次resolve的值
+    dealMyPromise exec! //再次执行dealMyPromise
+    status pending //因为是一个普通值，所以调用resolve，再次被推入任务队列，等待执行 error
+    times //注意 如果返回了一个myPromise并且resolve会自动调用then方法 （因为已经注册，所以函数不是空的），
+          //然后这个promise会返回给一个匿名的promise，继续resolve，所以打印times
+    [ [Function] ] //打印p2的函数队列
+    afterResolve //执行函数
+    ccc 222 //函数输出结果
+    result undefined //因为无返回值，所以打印undefined 
+    222 //然后执行之前因为调用onResolve的方法
+    dealMyPromise exec!
+    status pending
+    times
+    []
+    times
+    []
+  */
+
+
+
+ 
+
