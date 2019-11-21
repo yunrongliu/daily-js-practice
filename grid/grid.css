@@ -1,0 +1,127 @@
+html,body{
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+body{
+  line-height:1.4;
+  color:#333;
+  font-family:arial;
+  font-size: 14px;
+  background:white;
+  margin: 0;
+  overflow-x: hidden;
+}
+input,textarea,select{
+  font-size:14px;
+  font-size:100%;    
+  font-family:arial;
+  font-family:inherit;
+}
+body,h1,h2,h3,h4,h5,h6,p,ul,ol,form{
+  margin:0;
+}
+h4,h5,h6{
+  font-size:1em;
+}
+ul,ol{
+  padding-left:0; 
+  list-style-type:none;
+}
+/*image with no-border*/
+a img{border:0;}
+img{border:0;}
+
+.grid-container{
+  display: grid;  /*display: grid|| inline-gird 设置为一个grid容器*/
+  /*
+  *grid-template-columns || grid-template-rows
+  *用空格隔开 属性有具体的值 百分比 auto 有几个属性，就有多少对应的行或列
+  *可以使用名称定义其中的属性，名字用[]包起来
+  * 一条网格线可以有多个名称
+  * 如果包含多个重复值可以使用repeat
+  */
+  /* grid-template-columns: [first]40px [second]50px [third]auto [fourth]50px [fifth]40px; */
+  /* grid-template-rows: repeat(3, 20px [row-nt]) repeat(2, 20% [row-pc]) auto; */
+  /* grid-template-rows: 50px 2fr 50px 1fr; */
+
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: auto;
+  /*
+  *grid-template-areas
+  *语法
+  *grid-template-areas: name | . | none | 其它;
+                        sames
+  *作用是定义此grid容器的结构，并提供引用
+  */
+  
+  grid-template-areas: 
+                      "header header header header"
+                      "main main . saidBar"
+                      "footer footer footer footer";
+
+  /*
+  *column-gap || row-gap: value;
+  *gap: column-gap row-gap
+  *定义网格线的边距 相当于padding了
+  */
+  /* column-gap: 10px;
+  row-gap: 10px; */
+  gap: 5px 6px;
+  /*
+  *justify-items 横向对齐方式
+  *justify-items: start end center stretch
+  */
+  /* justify-items: center; */
+
+  /*
+  *align-items: 纵向对齐方式
+  *align-items: start end center stretch
+  */
+  /* align-items: center; */
+
+  /*
+  *place-items
+  *place-items: justify-items align-items
+  */
+  /* place-items: end start; */
+
+  /*justify-content: start | end | center | stretch | space-around | space-between | space-evenly;
+  **align-content: start | end | center | stretch | space-around | space-between | space-evenly
+  *这俩个属性都是当网格合计大小小于网格容器大小 才可以生效的属性
+  */
+
+  /*place-content: justify-content align-content;俩个属性的简写*/
+
+
+
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.grid-container .a{
+  /*
+  *grid-area: <name> | <row-start> / <column-start> / <row-end> / <column-end>
+  */
+  grid-area: header;
+  grid-column-start: 2;
+  grid-row-start: 2;
+  /*
+  *grid-column / grid-row : <start-line> / <end-line> | <start-line> / span <value> 
+  */
+
+  /*
+  *justify-self: start | end | center | stretch
+  *align-self: start | end | center | stretch
+  */
+}
+.grid-container .b{
+  grid-area: main;
+}
+.grid-container .c{
+  grid-area: saidBar;
+}
+.grid-container .d{
+  grid-area: footer;
+}
