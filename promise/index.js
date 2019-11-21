@@ -137,6 +137,7 @@
    console.log(_self.status)
    console.log(_self)
 
+   console.log('judgeFlag',judgeFunc(onResolve) === flag)
    onResolve = judgeFunc(onResolve) === flag ? onResolve : function(value){return value} //return value的原因是可以让值一直传递
    onReject = judgeFunc(onReject) === flag ? onReject : function(value){return value}
 
