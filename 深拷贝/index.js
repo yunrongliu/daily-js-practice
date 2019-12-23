@@ -1,9 +1,9 @@
 /**
- * Èç¹ûÊÇreg ·µ»ØÒ»¸örep¶ÔÏó
- * Èç¹ûÊÇdate ·µ»ØÒ»¸ödate
- * Èç¹û²»ÊÇObject£¬Ö±½Ó·µ»Ø
- * Èç¹û mapÀïÃæÓÃkey£¬¾Í·µ»Øvalue
- * Èç¹ûÊÇÊý×é  ÔòprototypeµÄconstructorÎªArray£¬·ñÔòÎªObject
+ * å¦‚æžœæ˜¯reg è¿”å›žä¸€ä¸ªrepå¯¹è±¡
+ * å¦‚æžœæ˜¯date è¿”å›žä¸€ä¸ªdate
+ * å¦‚æžœä¸æ˜¯Objectï¼Œç›´æŽ¥è¿”å›ž
+ * å¦‚æžœ mapé‡Œé¢ç”¨keyï¼Œå°±è¿”å›žvalue
+ * å¦‚æžœæ˜¯æ•°ç»„  åˆ™prototypeçš„constructorä¸ºArrayï¼Œå¦åˆ™ä¸ºObject
  */
 
 //es6
@@ -20,55 +20,68 @@ function deepClone(obj, hash = new WeakMap()){
   }
 
   //?
-  //Èç¹û´æÔÚÑ­»·ÒýÓÃµÄÇé¿ö  ÔòÖ±½Ó·µ»Ø
+  //å¦‚æžœå­˜åœ¨å¾ªçŽ¯å¼•ç”¨çš„æƒ…å†µ  åˆ™ç›´æŽ¥è¿”å›ž
   if(hash.has(obj)){
     return hash.get(obj)
   }
 
-  let t = Object.create(obj)  //ºÜ¶àÎÄÕÂ»áÓÃ new obj.constructor() ÕâÖÖ·½Ê½
-                              //µ«ÆäÊµÃ¿¸ö¶ÔÏó¶¼ÓÐconstructorÊôÐÔ,Õâ¸öÊôÐÔÔÚ¶ÔÏóµÄÔ­ÐÍÎ´±»ÐÞ¸ÄÇ°£¬±£´æµÄÊÇ¶ÔÏó±¾ÉíµÄÒýÓÃ
-                              //Èç¹ûÊ¹ÓÃtoString´òÓ¡³öÀ´Ó¦¸ÃÊÇÕâÖÖ¸ñÊ½ [Function: ¶ÔÏóµÄÀàÐÍ]
-                              //Õâ¸öÊôÐÔÊÇ²»¿ÉÃ¶¾Ù£¬µ«ÊÇÊÇ¿ÉÐÞ¸ÄµÄ
-                              //ÒòÎª obj.constructor±¾Éí¾ÍÊÇ¸öfunction£¬ËùÒÔ¿ÉÒÔÊ¹ÓÃnewÉùÃ÷
-                              //µ±´Ë¶ÔÏóµÄÔ­ÐÍ±»ÐÞ¸ÄÊ±£¨¾ÍÊÇjsÖÐÊµÏÖÎ±¼Ì³ÐµÄÊ±ºò£©£¬constructorÊôÐÔ»á¸ü¸Ä
-                              //ÎªÊ²Ã´£¿ÒòÎªÔ­ÐÍÒ²ÊÇÒ»¸ö¶ÔÏó£¬½øÐÐ¸³Öµ²Ù×÷£¬constructor¿Ï¶¨ÊÇÓÒ²éÑ¯µÄÄÇ¸ö¶ÔÏóµÄ
-                              //Èç¹ûÊÇ¿Õ¶ÔÏó£¬ÄÇ¾ÍÉ¶Ò²Ã»ÓÐ,ËùÒÔºÜ²»°²È«¡£
-                              //ËµÊµ»°£¬ÎÒ¾õµÃ½ÐselfÊôÐÔ±È½ÏºÃ£¬½ÐtmµÄconstructor£¬Ë­¶¼ÈÏÎªÊÇ¹¹ÔìÊôÐÔ£¨ÓÐ¡­¡­¹¹Ôì°¡Ö®ÀàµÄ£©
-                              //×Ü½á£º ½¨Òé·ÏÆú
-                              //ÔÙ¿´¿´Object.create ×ÖÃæÒâË¼ ÎÒ´´½¨¸ö¶ÔÏó Ê²Ã´¶ÔÏó objµÄÔ­ÐÍ¶ÔÏó(ÇÒ±£Áô×ÔÉíÔ­ÐÍµÄÊôÐÔ) 
-                              //create»¹ÓÐµÚ¶þ¸öÊôÐÔ ¿ÉÒÔ¸²¸ÇÔ­ÓÐÔ­ÐÍÉÏµÄÊôÐÔ ÕâÑù¿ÉÒÔ¸üºÃµÄ·ÀÖ¹ÆÁ±Î
+  let t = Object.create(obj)  //å¾ˆå¤šæ–‡ç« ä¼šç”¨ new obj.constructor() è¿™ç§æ–¹å¼
+                              //ä½†å…¶å®žæ¯ä¸ªå¯¹è±¡éƒ½æœ‰constructorå±žæ€§,è¿™ä¸ªå±žæ€§åœ¨å¯¹è±¡çš„åŽŸåž‹æœªè¢«ä¿®æ”¹å‰ï¼Œä¿å­˜çš„æ˜¯å¯¹è±¡æœ¬èº«çš„å¼•ç”¨
+                              //å¦‚æžœä½¿ç”¨toStringæ‰“å°å‡ºæ¥åº”è¯¥æ˜¯è¿™ç§æ ¼å¼ [Function: å¯¹è±¡çš„ç±»åž‹]
+                              //è¿™ä¸ªå±žæ€§æ˜¯ä¸å¯æžšä¸¾ï¼Œä½†æ˜¯æ˜¯å¯ä¿®æ”¹çš„
+                              //å› ä¸º obj.constructoræœ¬èº«å°±æ˜¯ä¸ªfunctionï¼Œæ‰€ä»¥å¯ä»¥ä½¿ç”¨newå£°æ˜Ž
+                              //å½“æ­¤å¯¹è±¡çš„åŽŸåž‹è¢«ä¿®æ”¹æ—¶ï¼ˆå°±æ˜¯jsä¸­å®žçŽ°ä¼ªç»§æ‰¿çš„æ—¶å€™ï¼‰ï¼Œconstructorå±žæ€§ä¼šæ›´æ”¹
+                              //ä¸ºä»€ä¹ˆï¼Ÿå› ä¸ºåŽŸåž‹ä¹Ÿæ˜¯ä¸€ä¸ªå¯¹è±¡ï¼Œè¿›è¡Œèµ‹å€¼æ“ä½œï¼Œconstructorè‚¯å®šæ˜¯å³æŸ¥è¯¢çš„é‚£ä¸ªå¯¹è±¡çš„
+                              //å¦‚æžœæ˜¯ç©ºå¯¹è±¡ï¼Œé‚£å°±å•¥ä¹Ÿæ²¡æœ‰,æ‰€ä»¥å¾ˆä¸å®‰å…¨ã€‚
+                              //è¯´å®žè¯ï¼Œæˆ‘è§‰å¾—å£°æ˜Žä¸ºselfå±žæ€§æ¯”è¾ƒå¥½ï¼Œconstructorçš„è¯è°éƒ½è®¤ä¸ºæ˜¯æž„é€ å±žæ€§ï¼ˆç”±â€¦â€¦æž„é€ å•Šä¹‹ç±»çš„ï¼‰
+                              //å†çœ‹çœ‹Object.create å­—é¢æ„æ€ æˆ‘åˆ›å»ºä¸ªå¯¹è±¡ ä»€ä¹ˆå¯¹è±¡ objçš„åŽŸåž‹å¯¹è±¡(ä¸”ä¿ç•™è‡ªèº«åŽŸåž‹çš„å±žæ€§) 
+                              //createè¿˜æœ‰ç¬¬äºŒä¸ªå±žæ€§ å¯ä»¥è¦†ç›–åŽŸæœ‰åŽŸåž‹ä¸Šçš„å±žæ€§ è¿™æ ·å¯ä»¥æ›´å¥½çš„é˜²æ­¢å±è”½
   console.log(t)
   hash.set(obj,t)
   console.log(hash)
 
-  for(let key in obj){
+  Reflect.ownKeys(obj).forEach((key) => {
     if(obj.hasOwnProperty(key)){
       t[key] = deepClone(obj[key],hash)
     }
-  }
+  })
+
+  // for(let key in obj){
+  //   if(obj.hasOwnProperty(key)){
+  //     t[key] = deepClone(obj[key],hash)
+  //   }
+  // }
 
   return t
 }
 
 let date = new Date()
-let loop = {}
-let arr = [
-  {
-    name: 'yunrong',
-    age: 21,
-    job: 'front-end',
-    oo: {
-      dream: 'to be myself'
-    }
-  },
-  {
-    now: date
-  }
-]
-arr[0].b = loop
-loop.c = arr[0]
+// let loop = {}
+// let arr = [
+//   {
+//     name: 'yunrong',
+//     age: 21,
+//     job: 'front-end',
+//     oo: {
+//       dream: 'to be myself'
+//     }
+//   },
+//   {
+//     now: date
+//   }
+// ]
+// arr[0].b = loop
+// loop.c = arr[0]
+let sym = Symbol('d')
+let testObj = {
+  a: 'cc',
+  b: 1,
+  c: function(){return 'c'},
+  d: Symbol('d')
+}
+testObj[sym] = 'sym'
 
-let da = deepClone(arr)
+console.log(typeof sym)
+
+let da = deepClone(testObj)
 console.log(da)
-
-arr[0].name = 'liu'
