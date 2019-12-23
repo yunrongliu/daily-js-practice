@@ -33,13 +33,13 @@ a img{border:0;}
 img{border:0;}
 
 .grid-container{
-  display: grid;  /*display: grid|| inline-gird ÉèÖÃÎªÒ»¸ögridÈİÆ÷*/
+  display: grid;  /*display: grid|| inline-gird è®¾ç½®ä¸ºä¸€ä¸ªgridå®¹å™¨*/
   /*
   *grid-template-columns || grid-template-rows
-  *ÓÃ¿Õ¸ñ¸ô¿ª ÊôĞÔÓĞ¾ßÌåµÄÖµ °Ù·Ö±È auto ÓĞ¼¸¸öÊôĞÔ£¬¾ÍÓĞ¶àÉÙ¶ÔÓ¦µÄĞĞ»òÁĞ
-  *¿ÉÒÔÊ¹ÓÃÃû³Æ¶¨ÒåÆäÖĞµÄÊôĞÔ£¬Ãû×ÖÓÃ[]°üÆğÀ´
-  * Ò»ÌõÍø¸ñÏß¿ÉÒÔÓĞ¶à¸öÃû³Æ
-  * Èç¹û°üº¬¶à¸öÖØ¸´Öµ¿ÉÒÔÊ¹ÓÃrepeat
+  *ç”¨ç©ºæ ¼éš”å¼€ å±æ€§æœ‰å…·ä½“çš„å€¼ ç™¾åˆ†æ¯” auto æœ‰å‡ ä¸ªå±æ€§ï¼Œå°±æœ‰å¤šå°‘å¯¹åº”çš„è¡Œæˆ–åˆ—
+  *å¯ä»¥ä½¿ç”¨åç§°å®šä¹‰å…¶ä¸­çš„å±æ€§ï¼Œåå­—ç”¨[]åŒ…èµ·æ¥
+  * ä¸€æ¡ç½‘æ ¼çº¿å¯ä»¥æœ‰å¤šä¸ªåç§°
+  * å¦‚æœåŒ…å«å¤šä¸ªé‡å¤å€¼å¯ä»¥ä½¿ç”¨repeat
   */
   /* grid-template-columns: [first]40px [second]50px [third]auto [fourth]50px [fifth]40px; */
   /* grid-template-rows: repeat(3, 20px [row-nt]) repeat(2, 20% [row-pc]) auto; */
@@ -49,10 +49,10 @@ img{border:0;}
   grid-template-rows: auto;
   /*
   *grid-template-areas
-  *Óï·¨
-  *grid-template-areas: name | . | none | ÆäËü;
+  *è¯­æ³•
+  *grid-template-areas: name | . | none | å…¶å®ƒ;
                         sames
-  *×÷ÓÃÊÇ¶¨Òå´ËgridÈİÆ÷µÄ½á¹¹£¬²¢Ìá¹©ÒıÓÃ
+  *ä½œç”¨æ˜¯å®šä¹‰æ­¤gridå®¹å™¨çš„ç»“æ„ï¼Œå¹¶æä¾›å¼•ç”¨
   */
   
   grid-template-areas: 
@@ -63,19 +63,19 @@ img{border:0;}
   /*
   *column-gap || row-gap: value;
   *gap: column-gap row-gap
-  *¶¨ÒåÍø¸ñÏßµÄ±ß¾à Ïàµ±ÓÚpaddingÁË
+  *å®šä¹‰ç½‘æ ¼çº¿çš„è¾¹è· ç›¸å½“äºpaddingäº†
   */
   /* column-gap: 10px;
   row-gap: 10px; */
   gap: 5px 6px;
   /*
-  *justify-items ºáÏò¶ÔÆë·½Ê½
+  *justify-items æ¨ªå‘å¯¹é½æ–¹å¼
   *justify-items: start end center stretch
   */
   /* justify-items: center; */
 
   /*
-  *align-items: ×İÏò¶ÔÆë·½Ê½
+  *align-items: çºµå‘å¯¹é½æ–¹å¼
   *align-items: start end center stretch
   */
   /* align-items: center; */
@@ -88,10 +88,10 @@ img{border:0;}
 
   /*justify-content: start | end | center | stretch | space-around | space-between | space-evenly;
   **align-content: start | end | center | stretch | space-around | space-between | space-evenly
-  *ÕâÁ©¸öÊôĞÔ¶¼ÊÇµ±Íø¸ñºÏ¼Æ´óĞ¡Ğ¡ÓÚÍø¸ñÈİÆ÷´óĞ¡ ²Å¿ÉÒÔÉúĞ§µÄÊôĞÔ
+  *è¿™ä¿©ä¸ªå±æ€§éƒ½æ˜¯å½“ç½‘æ ¼åˆè®¡å¤§å°å°äºç½‘æ ¼å®¹å™¨å¤§å° æ‰å¯ä»¥ç”Ÿæ•ˆçš„å±æ€§
   */
 
-  /*place-content: justify-content align-content;Á©¸öÊôĞÔµÄ¼òĞ´*/
+  /*place-content: justify-content align-content;ä¿©ä¸ªå±æ€§çš„ç®€å†™*/
 
 
 

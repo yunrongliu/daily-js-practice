@@ -1,56 +1,56 @@
 /**
- * ´ËÆ¬ÎÄÕÂÃèÊöpromise
+ * æ­¤ç‰‡æ–‡ç« æè¿°promise
  * 
- * promise ÊÇÒ»ÖÖÒì²½½â¾ö·½°¸
+ * promise æ˜¯ä¸€ç§å¼‚æ­¥è§£å†³æ–¹æ¡ˆ
  * 
- * ÄÚ²¿ÓÉÈýÖÖ×´Ì¬¿ØÖÆ
- *  pending: promise¶ÔÏóµÄ³õÊ¼×´Ì¬
- *  fulfilled: ÒâÎ¶×Å²Ù×÷Íê³É
- *  rejected: ÒâÎ¶×Å²Ù×÷Ê§°Ü
+ * å†…éƒ¨ç”±ä¸‰ç§çŠ¶æ€æŽ§åˆ¶
+ *  pending: promiseå¯¹è±¡çš„åˆå§‹çŠ¶æ€
+ *  fulfilled: æ„å‘³ç€æ“ä½œå®Œæˆ
+ *  rejected: æ„å‘³ç€æ“ä½œå¤±è´¥
  * 
- * promise¹¹Ôìº¯Êý½ÓÊÕÒ»¸öexecutorº¯Êý
- * executorÊÇ´øÓÐresolveºÍrejectÁ©¸ö²ÎÊýµÄº¯Êý
- * promise»áÁ¢¼´Ö´ÐÐexecutorº¯Êý£¬ËùÒÔPromiseº¯ÊýÄÚ²¿ÊÇÍ¬²½´úÂë£¬then,catch,finallyÊÇÒì²½µÄ£¨µ«thenµÄÊµÏÖÖÐÖ»ÊÇ½«·µ»ØµÄº¯ÊýÌåÄÚÉèÎªÒì²½£¬ÆäÓàµÄ»¹ÊÇÍ¬²½µÄ£©
+ * promiseæž„é€ å‡½æ•°æŽ¥æ”¶ä¸€ä¸ªexecutorå‡½æ•°
+ * executoræ˜¯å¸¦æœ‰resolveå’Œrejectä¿©ä¸ªå‚æ•°çš„å‡½æ•°
+ * promiseä¼šç«‹å³æ‰§è¡Œexecutorå‡½æ•°ï¼Œæ‰€ä»¥Promiseå‡½æ•°å†…éƒ¨æ˜¯åŒæ­¥ä»£ç ï¼Œthen,catch,finallyæ˜¯å¼‚æ­¥çš„ï¼ˆä½†thençš„å®žçŽ°ä¸­åªæ˜¯å°†è¿”å›žçš„å‡½æ•°ä½“å†…è®¾ä¸ºå¼‚æ­¥ï¼Œå…¶ä½™çš„è¿˜æ˜¯åŒæ­¥çš„ï¼‰
  * 
- * promiseµÄthen·½·¨ºÍcatchÒ²·µ»ØÒ»¸öpromise£¬ËùÒÔ¿ÉÒÔ½øÐÐÁ´Ê½µ÷ÓÃ
- * µ«Èç¹ûÕû¸öÒì²½Á÷³Ì¹ýÓÚ¸´ÔÓµÄ»°£¬promise»á°ÑÎÊÌâ±äµÃ¸ü¸´ÔÓ
- * ËùÒÔÏÖÔÚÍÆÓÃasyncºÍawait £¨promiseºÍgenerator½áºÏµÄÒì²½Á÷³Ì½â¾ö·½°¸£©
+ * promiseçš„thenæ–¹æ³•å’Œcatchä¹Ÿè¿”å›žä¸€ä¸ªpromiseï¼Œæ‰€ä»¥å¯ä»¥è¿›è¡Œé“¾å¼è°ƒç”¨
+ * ä½†å¦‚æžœæ•´ä¸ªå¼‚æ­¥æµç¨‹è¿‡äºŽå¤æ‚çš„è¯ï¼Œpromiseä¼šæŠŠé—®é¢˜å˜å¾—æ›´å¤æ‚
+ * æ‰€ä»¥çŽ°åœ¨æŽ¨ç”¨asyncå’Œawait ï¼ˆpromiseå’Œgeneratorç»“åˆçš„å¼‚æ­¥æµç¨‹è§£å†³æ–¹æ¡ˆï¼‰
  * 
- * promise¾ß±¸ÏÂÃæ¼¸¸ö·½·¨£º
- *  (ÍÆ¼öthen·½·¨ÓÃÓÚ´¦Àí³É¹¦µÄÇé¿ö£¬catch·½·¨´¦Àí·ÇÔ¤ÆÚÇé¿ö)
- *  1.then then·½·¨°üº¬Á©¸öº¯Êý£¬º¯ÊýµÄ²ÎÊý¶ÔÓ¦×ÅÏàÓ¦µÄ½âÊÍ£¬µ«ÊÇ»¹ÊÇÏ£ÍûÓÃcatchÀ´´úÌæµÚ¶þ¸ö²ÎÊý,²¢·µ»ØÒ»¸öpromise¶ÔÏó
- *  2.catch catch·½·¨°üº¬Ò»¸öº¯Êý£¬º¯ÊýµÄ²ÎÊýÊÇ¾Ü¾øµÄ½âÊÍ£¬²¢·µ»ØÒ»¸öpromise¶ÔÏó
- *  3.resolve ·µ»ØÒ»¸öfulfilled×´Ì¬µÄpromise¶ÔÏó ²¢´¥·¢then·½·¨
- *  4.reject ·µ»ØÒ»¸örejected×´Ì¬µÄpromise¶ÔÏó ²¢´¥·¢catch·½·¨
- *  5.all µÈµ½¶à¸öpromiseµÄ×´Ì¬¶¼ÎªfulfilledÊ±£¬²Å»á´¥·¢then·½·¨
- *    Ê¹ÓÃ·½·¨:
- *      Promise.all(iterable) Í¨³£ÊÇ¸öÊý×é
- *      then·½·¨ÄÃµ½µÄdataÒ²ÊÇ¸öÊý×é
+ * promiseå…·å¤‡ä¸‹é¢å‡ ä¸ªæ–¹æ³•ï¼š
+ *  (æŽ¨èthenæ–¹æ³•ç”¨äºŽå¤„ç†æˆåŠŸçš„æƒ…å†µï¼Œcatchæ–¹æ³•å¤„ç†éžé¢„æœŸæƒ…å†µ)
+ *  1.then thenæ–¹æ³•åŒ…å«ä¿©ä¸ªå‡½æ•°ï¼Œå‡½æ•°çš„å‚æ•°å¯¹åº”ç€ç›¸åº”çš„è§£é‡Šï¼Œä½†æ˜¯è¿˜æ˜¯å¸Œæœ›ç”¨catchæ¥ä»£æ›¿ç¬¬äºŒä¸ªå‚æ•°,å¹¶è¿”å›žä¸€ä¸ªpromiseå¯¹è±¡
+ *  2.catch catchæ–¹æ³•åŒ…å«ä¸€ä¸ªå‡½æ•°ï¼Œå‡½æ•°çš„å‚æ•°æ˜¯æ‹’ç»çš„è§£é‡Šï¼Œå¹¶è¿”å›žä¸€ä¸ªpromiseå¯¹è±¡
+ *  3.resolve è¿”å›žä¸€ä¸ªfulfilledçŠ¶æ€çš„promiseå¯¹è±¡ å¹¶è§¦å‘thenæ–¹æ³•
+ *  4.reject è¿”å›žä¸€ä¸ªrejectedçŠ¶æ€çš„promiseå¯¹è±¡ å¹¶è§¦å‘catchæ–¹æ³•
+ *  5.all ç­‰åˆ°å¤šä¸ªpromiseçš„çŠ¶æ€éƒ½ä¸ºfulfilledæ—¶ï¼Œæ‰ä¼šè§¦å‘thenæ–¹æ³•
+ *    ä½¿ç”¨æ–¹æ³•:
+ *      Promise.all(iterable) é€šå¸¸æ˜¯ä¸ªæ•°ç»„
+ *      thenæ–¹æ³•æ‹¿åˆ°çš„dataä¹Ÿæ˜¯ä¸ªæ•°ç»„
  *  6.race
- *    Ê¹ÓÃ·½·¨:
- *      Promise.race(iterable) Í¨³£ÊÇ¸öÊý×é
- *      ÄÃµ½µ±Ç°²ÎÊýÖÐ×îÏÈ½«×´Ì¬ÐÞ¸ÄÎª·ÇpendingµÄpromise£¬È»ºóÍ£Ö¹ÆäËûµÄpromise
- *      ËùÒÔthen£¬catch·µ»ØµÄÒ²ÊÇ¶ÔÓ¦promiseµÄresolve»òrejectµÄ½á¹û
+ *    ä½¿ç”¨æ–¹æ³•:
+ *      Promise.race(iterable) é€šå¸¸æ˜¯ä¸ªæ•°ç»„
+ *      æ‹¿åˆ°å½“å‰å‚æ•°ä¸­æœ€å…ˆå°†çŠ¶æ€ä¿®æ”¹ä¸ºéžpendingçš„promiseï¼Œç„¶åŽåœæ­¢å…¶ä»–çš„promise
+ *      æ‰€ä»¥thenï¼Œcatchè¿”å›žçš„ä¹Ÿæ˜¯å¯¹åº”promiseçš„resolveæˆ–rejectçš„ç»“æžœ
  * 
- * ÁË½âpromiseÄÚ²¿µÄÔ­Àí ¶ÔÓÚ generator ºÍ async µÄÀí½â»áÓÐºÜ´ó°ïÖú
+ * äº†è§£promiseå†…éƒ¨çš„åŽŸç† å¯¹äºŽ generator å’Œ async çš„ç†è§£ä¼šæœ‰å¾ˆå¤§å¸®åŠ©
  * 
- * ÊµÏÖ£º
- * ·ÖÎö£º
- *    Ê×ÏÈÎÒÃÇÒªÓÐÈý¸ö×´Ì¬
- *    È»ºóthen·½·¨Ö§³ÖÁ©¸ö»Øµ÷º¯Êý²¢°Ñ¶ÔÓ¦µÄ½âÊÍÌí¼Ó½øÈ¥
- *    È»ºócatch¿ÉÒÔ²¶»ñreject¾Ü¾øµÄÇé¿ö
- *    È»ºóresolveºÍrejectÁ½¸öº¯Êý¿ÉÒÔ¸üÐÂpromise¶ÔÏóµÄ×´Ì¬ ²¢Ìí¼Ó¶ÔÓ¦µÄ»Øµ÷
- *    È»ºó¾ß±¸allºÍrace·½·¨
+ * å®žçŽ°ï¼š
+ * åˆ†æžï¼š
+ *    é¦–å…ˆæˆ‘ä»¬è¦æœ‰ä¸‰ä¸ªçŠ¶æ€
+ *    ç„¶åŽthenæ–¹æ³•æ”¯æŒä¿©ä¸ªå›žè°ƒå‡½æ•°å¹¶æŠŠå¯¹åº”çš„è§£é‡Šæ·»åŠ è¿›åŽ»
+ *    ç„¶åŽcatchå¯ä»¥æ•èŽ·rejectæ‹’ç»çš„æƒ…å†µ
+ *    ç„¶åŽresolveå’Œrejectä¸¤ä¸ªå‡½æ•°å¯ä»¥æ›´æ–°promiseå¯¹è±¡çš„çŠ¶æ€ å¹¶æ·»åŠ å¯¹åº”çš„å›žè°ƒ
+ *    ç„¶åŽå…·å¤‡allå’Œraceæ–¹æ³•
  */
 
  function myPromise(executor){
-   this.status = 'pending' //×´Ì¬ 
-   this.resolveCallbackCol = [] //±»½ÓÊÕµÄ»Øµ÷º¯Êý¶ÓÁÐ£¬ÒòÎªthen·½·¨¿ÉÒÔÒ»Ö±·µ»ØÒ»¸öpromise
-   this.rejectCallbackCol = [] //±»¾Ü¾øµÄ»Øµ÷º¯Êý¶ÓÁÐ
+   this.status = 'pending' //çŠ¶æ€ 
+   this.resolveCallbackCol = [] //è¢«æŽ¥æ”¶çš„å›žè°ƒå‡½æ•°é˜Ÿåˆ—ï¼Œå› ä¸ºthenæ–¹æ³•å¯ä»¥ä¸€ç›´è¿”å›žä¸€ä¸ªpromise
+   this.rejectCallbackCol = [] //è¢«æ‹’ç»çš„å›žè°ƒå‡½æ•°é˜Ÿåˆ—
 
-   this.result = null //»Øµ÷º¯ÊýµÄ½âÊÍ
+   this.result = null //å›žè°ƒå‡½æ•°çš„è§£é‡Š
 
-   const _self = this //±£´æÉÏÏÂÎÄ
+   const _self = this //ä¿å­˜ä¸Šä¸‹æ–‡
 
    function resolve(value){
      console.log('resolve: _self',_self)
@@ -60,8 +60,8 @@
      if(_self.status === 'pending'){
        setTimeout(() => {
          console.log('setTimeout _self',_self)
-        _self.status = 'fulfilled' //½«×´Ì¬ÖÃÎªÍê³É
-        _self.result = value //½«´«ÈëµÄvalue×÷Îª½âÊÍ
+        _self.status = 'fulfilled' //å°†çŠ¶æ€ç½®ä¸ºå®Œæˆ
+        _self.result = value //å°†ä¼ å…¥çš„valueä½œä¸ºè§£é‡Š
         console.log(_self.resolveCallbackCol)
         _self.resolveCallbackCol.forEach( cb => cb(value))
        }, 4);
@@ -73,8 +73,8 @@
      if(_self.status === 'pending'){
        setTimeout(() => {
         console.log('times')
-        _self.status = 'rejected' //½«×´Ì¬ÖÃÎª¾Ü¾ø
-        _self.result = value //½«´«ÈëµÄvalue×÷Îª½âÊÍ
+        _self.status = 'rejected' //å°†çŠ¶æ€ç½®ä¸ºæ‹’ç»
+        _self.result = value //å°†ä¼ å…¥çš„valueä½œä¸ºè§£é‡Š
  
         _self.rejectCallbackCol.forEach( cb => cb(value))
        }, 4);
@@ -91,60 +91,60 @@
  }
 
  /**
-  * ´¦Àíthen·µ»ØÖµ
-  * @param {myPromise} retPromise then·½·¨·µ»ØµÄmyPromise¶ÔÏó
-  * @param {any} retValue resolve»òrejectµÃµ½µÄ½á¹û
-  * @param {function} resolve retPromiseµÄresolve·½·¨
-  * @param {function} reject retPromiseµÄreject·½·¨
+  * å¤„ç†thenè¿”å›žå€¼
+  * @param {myPromise} retPromise thenæ–¹æ³•è¿”å›žçš„myPromiseå¯¹è±¡
+  * @param {any} retValue resolveæˆ–rejectå¾—åˆ°çš„ç»“æžœ
+  * @param {function} resolve retPromiseçš„resolveæ–¹æ³•
+  * @param {function} reject retPromiseçš„rejectæ–¹æ³•
   */
  function dealMyPromise(retPromise,retValue,resolve,reject){
     console.log('dealMyPromise exec!')
-    //Èç¹û·µ»ØµÄ×ÔÉí Å×³ö´íÎó
+    //å¦‚æžœè¿”å›žçš„è‡ªèº« æŠ›å‡ºé”™è¯¯
     if(retPromise === retValue){
       throw new Error('Cycle Reference!Can not return self!')
     }
 
-    if(retValue instanceof myPromise){ //Èç¹ûÊÇmyPromiseµÄÊµÀý
-      if(retValue.status === 'pending'){ //ÇÒ×´Ì¬Îªpending×´Ì¬,ÏÈ×¢²áthen·½·¨£¬È»ºóµÈ´ýÖ´ÐÐ
+    if(retValue instanceof myPromise){ //å¦‚æžœæ˜¯myPromiseçš„å®žä¾‹
+      if(retValue.status === 'pending'){ //ä¸”çŠ¶æ€ä¸ºpendingçŠ¶æ€,å…ˆæ³¨å†Œthenæ–¹æ³•ï¼Œç„¶åŽç­‰å¾…æ‰§è¡Œ
         retValue.then(result => { 
           dealMyPromise(retPromise,result,resolve,reject)
         },error => {
           reject(error)
         })
-      }else{//Èç¹û²»ÊÇpending£¬Ö±½Ó×¢²áÖ´ÐÐ
+      }else{//å¦‚æžœä¸æ˜¯pendingï¼Œç›´æŽ¥æ³¨å†Œæ‰§è¡Œ
         retValue.then(resolve,reject)
       }
-      // retValue.then(resolve,reject) //×¢²áthen
-    }else{//Èç¹ûÊÇÆÕÍ¨µÄÖµ
-      resolve(retValue) //Ö±½Óresolve
+      // retValue.then(resolve,reject) //æ³¨å†Œthen
+    }else{//å¦‚æžœæ˜¯æ™®é€šçš„å€¼
+      resolve(retValue) //ç›´æŽ¥resolve
     }
  }
 
- //ÊµÏÖthen·½·¨
+ //å®žçŽ°thenæ–¹æ³•
  myPromise.prototype.then = function(onResolve,onReject){
-   //±£´æÉÏÏÂÎÄ
+   //ä¿å­˜ä¸Šä¸‹æ–‡
    const _self = this
 
-   //ÅÐ¶Ï±êÊ¶
+   //åˆ¤æ–­æ ‡è¯†
    const flag = '[object Function]'
-   //ÅÐ¶Ï·½·¨
+   //åˆ¤æ–­æ–¹æ³•
    const judgeFunc = type => Object.prototype.toString.call(type)
 
-   //¶¨ÒåÒª·µ»ØµÄpromise
+   //å®šä¹‰è¦è¿”å›žçš„promise
    let retPromise = null
 
-   //ÅÐ¶Ïthen·½·¨´«ÈëµÄ²ÎÊýÊÇ·ñÊÇ¸öfunction£¬Èç¹û²»ÊÇÔòÖ±½ÓºöÂÔ 
+   //åˆ¤æ–­thenæ–¹æ³•ä¼ å…¥çš„å‚æ•°æ˜¯å¦æ˜¯ä¸ªfunctionï¼Œå¦‚æžœä¸æ˜¯åˆ™ç›´æŽ¥å¿½ç•¥ 
    console.log(_self.status)
    console.log(_self)
 
    console.log('judgeFlag',judgeFunc(onResolve) === flag)
-   onResolve = judgeFunc(onResolve) === flag ? onResolve : function(value){return value} //return valueµÄÔ­ÒòÊÇ¿ÉÒÔÈÃÖµÒ»Ö±´«µÝ
+   onResolve = judgeFunc(onResolve) === flag ? onResolve : function(value){return value} //return valueçš„åŽŸå› æ˜¯å¯ä»¥è®©å€¼ä¸€ç›´ä¼ é€’
    onReject = judgeFunc(onReject) === flag ? onReject : function(value){return value}
 
-   //ÅÐ¶Ï´«ÈëµÄ×´Ì¬£¬ÉèÖÃÒª·µ»ØµÄpromise
-   //ÓÅ»¯if °Ñ×îÓÐ¿ÉÄÜµÄ·Åµ½Ç°Ãæ
+   //åˆ¤æ–­ä¼ å…¥çš„çŠ¶æ€ï¼Œè®¾ç½®è¦è¿”å›žçš„promise
+   //ä¼˜åŒ–if æŠŠæœ€æœ‰å¯èƒ½çš„æ”¾åˆ°å‰é¢
    if(_self.status === 'pending'){
-    //Èç¹û×´Ì¬»¹ÊÇ´¦ÓÚpendingµÄ ÆäÊµºÍ¹¹Ôìº¯Êý²î²»¶à ÐèÒªÍùÍê³ÉºÍ¾Ü¾øÁ©¸ö»Øµ÷¶ÓÁÐÀïÃæÍÆÈë¶ÔÓ¦µÄ»Øµ÷º¯Êý
+    //å¦‚æžœçŠ¶æ€è¿˜æ˜¯å¤„äºŽpendingçš„ å…¶å®žå’Œæž„é€ å‡½æ•°å·®ä¸å¤š éœ€è¦å¾€å®Œæˆå’Œæ‹’ç»ä¿©ä¸ªå›žè°ƒé˜Ÿåˆ—é‡Œé¢æŽ¨å…¥å¯¹åº”çš„å›žè°ƒå‡½æ•°
       return retPromise = new myPromise((resolve,reject) => {
         console.log('beforeResolve','  resolveCallbackCol push')
         _self.resolveCallbackCol.push(function(value){
@@ -153,7 +153,7 @@
             console.log('before onResolve _self',_self)
             console.log('before onResolve p3',p3)
             console.log('onResolve',onResolve)
-            let result = onResolve(_self.result) //ÏÈÄÃµ½·µ»ØÖµconsole.log('')
+            let result = onResolve(_self.result) //å…ˆæ‹¿åˆ°è¿”å›žå€¼console.log('')
             console.log('onResolve next p3',p3)
             console.log('onResolve next p2',p2)
             console.log('onResolve next _self',_self)
@@ -161,17 +161,17 @@
             dealMyPromise(retPromise,result,resolve,reject)
 
           } catch (error) {
-            reject(error) //Èç¹ûÅ×³ö´íÎó£¬ÄÇÃ´ÒÔ´íÎó×÷Îª½âÊÍ
+            reject(error) //å¦‚æžœæŠ›å‡ºé”™è¯¯ï¼Œé‚£ä¹ˆä»¥é”™è¯¯ä½œä¸ºè§£é‡Š
           }
         })
 
         _self.rejectCallbackCol.push(function(value){
           try {
-            let result = onReject(_self.result) //ÏÈÄÃµ½·µ»ØÖµ
+            let result = onReject(_self.result) //å…ˆæ‹¿åˆ°è¿”å›žå€¼
             dealMyPromise(retPromise,result,resolve,reject)
 
           } catch (error) {
-            reject(error) //Èç¹ûÅ×³ö´íÎó£¬ÄÇÃ´ÒÔ´íÎó×÷Îª½âÊÍ
+            reject(error) //å¦‚æžœæŠ›å‡ºé”™è¯¯ï¼Œé‚£ä¹ˆä»¥é”™è¯¯ä½œä¸ºè§£é‡Š
           }
         })
       })
@@ -183,7 +183,7 @@
      return retPromise = new myPromise((resolve,reject) => {
       setTimeout(() => {
         try {
-          let result = onResolve(_self.result) //Ö´ÐÐ£¬È¡µÃ·µ»Ø½á¹û
+          let result = onResolve(_self.result) //æ‰§è¡Œï¼Œå–å¾—è¿”å›žç»“æžœ
           console.log('fulfilled result',result)
           dealMyPromise(retPromise,result,resolve,reject)
         } catch (error) {
@@ -208,17 +208,17 @@
 
  }
 
- //ËùÒÔÕûÌåpromiseµÄÁ÷³ÌÓ¦¸ÃÊÇÕâÑù
+ //æ‰€ä»¥æ•´ä½“promiseçš„æµç¨‹åº”è¯¥æ˜¯è¿™æ ·
  /**
-  * µÚÒ»²½ Á¢¼´Ö´ÐÐpromise´«ÈëµÄexecutorº¯Êý£¬ËùÒÔpromiseµÄexecutorÊÇÍ¬²½´úÂë
-  * µÚ¶þ²½ Èç¹ûµ÷ÓÃresolve»òÕßreject ¾ÍÖ´ÐÐ¶ÔÓ¦µÄ·½·¨£¬µ«ÓÉÓÚresolveºÍrejectÊÇÒì²½µÄ£¬ËùÒÔ»á±»ÍÆÈëÈÎÎñ¶ÓÁÐ£¬²»»áÁ¢¼´Ö´ÐÐ£¬ËùÒÔµ÷ÓÃthenÊ±µÄ×´Ì¬²»ÊÇ¸üÐÂºóµÄ
-  * µÚÈý²½ µ÷ÓÃthen then»áÅÐ¶Ï×´Ì¬£¬ËùÒÔµÚÒ»´Îµ÷ÓÃthenÊ±×´Ì¬Ò»¶¨Ê±pending£¬ËùÒÔ»á´¥·¢pendingµÄÌõ¼þ£¬½«º¯ÊýÍÆÈëµ½¶ÔÓ¦µÄ×´Ì¬¶ÓÁÐÖÐ
-  * µÚËÄ²½ ÒòÎª´ËÊ±Í¬²½´úÂëÒÑ¾­Ã»ÁË£¬ËùÒÔ»áµ÷ÓÃÈÎÎñ¶ÓÁÐÖÐµÄÈÎÎñ£¬¾ÍÊÇµ÷ÓÃresolve»òÕßreject È»ºó´ËÊ±¸Ä±ä×´Ì¬£¬È»ºóÔÙÈ¥Ö´ÐÐ¶ÔÓ¦×´Ì¬¶ÓÁÐÖÐµÄº¯Êý
+  * ç¬¬ä¸€æ­¥ ç«‹å³æ‰§è¡Œpromiseä¼ å…¥çš„executorå‡½æ•°ï¼Œæ‰€ä»¥promiseçš„executoræ˜¯åŒæ­¥ä»£ç 
+  * ç¬¬äºŒæ­¥ å¦‚æžœè°ƒç”¨resolveæˆ–è€…reject å°±æ‰§è¡Œå¯¹åº”çš„æ–¹æ³•ï¼Œä½†ç”±äºŽresolveå’Œrejectæ˜¯å¼‚æ­¥çš„ï¼Œæ‰€ä»¥ä¼šè¢«æŽ¨å…¥ä»»åŠ¡é˜Ÿåˆ—ï¼Œä¸ä¼šç«‹å³æ‰§è¡Œï¼Œæ‰€ä»¥è°ƒç”¨thenæ—¶çš„çŠ¶æ€ä¸æ˜¯æ›´æ–°åŽçš„
+  * ç¬¬ä¸‰æ­¥ è°ƒç”¨then thenä¼šåˆ¤æ–­çŠ¶æ€ï¼Œæ‰€ä»¥ç¬¬ä¸€æ¬¡è°ƒç”¨thenæ—¶çŠ¶æ€ä¸€å®šæ—¶pendingï¼Œæ‰€ä»¥ä¼šè§¦å‘pendingçš„æ¡ä»¶ï¼Œå°†å‡½æ•°æŽ¨å…¥åˆ°å¯¹åº”çš„çŠ¶æ€é˜Ÿåˆ—ä¸­
+  * ç¬¬å››æ­¥ å› ä¸ºæ­¤æ—¶åŒæ­¥ä»£ç å·²ç»æ²¡äº†ï¼Œæ‰€ä»¥ä¼šè°ƒç”¨ä»»åŠ¡é˜Ÿåˆ—ä¸­çš„ä»»åŠ¡ï¼Œå°±æ˜¯è°ƒç”¨resolveæˆ–è€…reject ç„¶åŽæ­¤æ—¶æ”¹å˜çŠ¶æ€ï¼Œç„¶åŽå†åŽ»æ‰§è¡Œå¯¹åº”çŠ¶æ€é˜Ÿåˆ—ä¸­çš„å‡½æ•°
   * 
-  * ÐèÒª×¢ÒâµÄÊÇ±»ÍÆÈë×´Ì¬¶ÓÁÐµÄº¯Êý Ó¦¸Ã´¦Àí¼¸ÖÖÇé¿ö
-  *  £¨²»¿¼ÂÇ´¦Àí¼æÈÝÆäËûpromise¿â£¬Ö»ÊÇÎªÁË½²½âÔ­Àí£¬ÒòÎªÕâÀï±¾À´¾ÍÓÐµãÈÆ£¬ËùÒÔ»¹ÊÇ¼òµ¥ÎªºÃ£©
-  *   1.Èç¹û·µ»ØµÄÊÇÕâ¸öpromise±¾Éí£¬ÄÇÃ´Ó¦¸ÃÅ×³ö´íÎó£¬ÒòÎªÕâÑù»áµ¼ÖÂÑ­»·ÒýÓÃ
-  *   2.Èç¹û·µ»ØµÄÊÇÒ»¸öpromise£¬ÄÇÃ´Ó¦¸Ã×¢²áÕâ¸öpromiseµÄthen·½·¨£¬¾ÍÊÇÓÃÕâ¸öpromiseµ÷ÓÃÒ»±éthen·½·¨
+  * éœ€è¦æ³¨æ„çš„æ˜¯è¢«æŽ¨å…¥çŠ¶æ€é˜Ÿåˆ—çš„å‡½æ•° åº”è¯¥å¤„ç†å‡ ç§æƒ…å†µ
+  *  ï¼ˆä¸è€ƒè™‘å¤„ç†å…¼å®¹å…¶ä»–promiseåº“ï¼Œåªæ˜¯ä¸ºäº†è®²è§£åŽŸç†ï¼Œå› ä¸ºè¿™é‡Œæœ¬æ¥å°±æœ‰ç‚¹ç»•ï¼Œæ‰€ä»¥è¿˜æ˜¯ç®€å•ä¸ºå¥½ï¼‰
+  *   1.å¦‚æžœè¿”å›žçš„æ˜¯è¿™ä¸ªpromiseæœ¬èº«ï¼Œé‚£ä¹ˆåº”è¯¥æŠ›å‡ºé”™è¯¯ï¼Œå› ä¸ºè¿™æ ·ä¼šå¯¼è‡´å¾ªçŽ¯å¼•ç”¨
+  *   2.å¦‚æžœè¿”å›žçš„æ˜¯ä¸€ä¸ªpromiseï¼Œé‚£ä¹ˆåº”è¯¥æ³¨å†Œè¿™ä¸ªpromiseçš„thenæ–¹æ³•ï¼Œå°±æ˜¯ç”¨è¿™ä¸ªpromiseè°ƒç”¨ä¸€éthenæ–¹æ³•
   *   
   */
 
@@ -248,8 +248,8 @@
    console.log('ccc',data)
  })
 
- /**ÔÚ·½·¨ÀïÃæ´òÓ¡ÁËÒ»Ð©±ê¼Ç·½±ãÎÒÃÇ·ÖÎö£¬È»ºóÎÒÃÇÖðÐÐ·ÖÎö´úÂëÔËÐÐ£¬½¨ÒéÓÃvscodeË«ÆÁ·ÖÎö
-  * ÔËÐÐ½á¹ûÈçÏÂ£º
+ /**åœ¨æ–¹æ³•é‡Œé¢æ‰“å°äº†ä¸€äº›æ ‡è®°æ–¹ä¾¿æˆ‘ä»¬åˆ†æžï¼Œç„¶åŽæˆ‘ä»¬é€è¡Œåˆ†æžä»£ç è¿è¡Œï¼Œå»ºè®®ç”¨vscodeåŒå±åˆ†æž
+  * è¿è¡Œç»“æžœå¦‚ä¸‹ï¼š
   * 
   * 
   * 
