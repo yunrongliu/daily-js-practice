@@ -1,5 +1,5 @@
 /**
- * 此篇描述this
+ * 此篇描述this 参考你不知道的JavaScript
  */
 
  // this的绑定方式
@@ -13,8 +13,6 @@
   defaultFn() // Object global
 }
  
-
-
  // 2. 隐式绑定 implicit
 
 {
@@ -31,7 +29,9 @@
   }
 
   obj.implicitFn() //yr
-  obj2.target.implicitFn() //yr
+  // obj2.target.implicitFn() //yr
+
+  // obj.implicitFn.call(obj2) // lc
 
   /** 隐式绑定只在最后一层调用位置起作用 */
 
@@ -96,6 +96,8 @@
 
   console.log(p1.name) // yr
 } 
+
+// 箭头函数  指向当前定义的上一级环境的this
 
 /**
  * 优先级

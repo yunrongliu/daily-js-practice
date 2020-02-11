@@ -226,6 +226,4 @@ let right = [1,2,4,6,7,7,88,99]
 let res = ArrayUtils.zip('lc',[1,2,3,4,5,6],[1,2],[4],[5])
 
 
-
-
 console.log(res)

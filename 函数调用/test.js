@@ -1,12 +1,4 @@
 {
-  let execStack = function(fnStack,efn){
-    return fnStack.reduce((ret,fn,inx) => {
-      let res = efn.call(fn,inx)
-      ret.push(res)
-      return ret
-    },[])
-  }
-
   let test1 = function(inx,data){
     console.log(arguments)
     console.log(inx)
@@ -22,9 +14,18 @@
   }
   
   let test3 = function(inx,data){
+    console.log(arguments)
     console.log(inx)
     console.log(data)
     return data
+  }
+
+  let execStack = function(fnStack,efn){
+    return fnStack.reduce((ret,fn,inx) => {
+      let res = efn.call(fn,inx)
+      ret.push(res)
+      return ret
+    },[])
   }
 
   let obj = {
@@ -34,7 +35,7 @@
       fnStack.push(test2)
       fnStack.push(test3)
       let _self = this
-      let arg = [...arguments]
+      let arg = [...arguments] //[1]
 
       let result = execStack(fnStack,function(inx){
         console.log(this)
