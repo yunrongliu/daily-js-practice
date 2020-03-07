@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <h1 id="name">{{name}}</h1>
+
+  <!-- <script src="./observer.js"></script> -->
+  <script src="./proxy/index.js"></script>
+  <script>
+    function selfVue (data,el,exp) {
+      this.data = data
+      observe(data)
+      el.innerHTML = this.data[exp]
+      new Watcher(this,exp,function (value) {
+        el.innerHTML = value
+      })
+      return this
+    }
+
+    window.onload = function () {
+      let el = document.getElementById('name')
+      var myVue = new selfVue({
+        name: 'hello world'
+      },el,'name')
+
+
+      setTimeout(function () {
+        console.log('name值改变了');
+        myVue.data.name = 'canfoo';
+      }, 2000)
+    }
+  </script>
+</body>
+</html>

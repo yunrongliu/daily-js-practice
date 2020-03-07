@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="targetCont">
+
+  </div>
+  <button type="button" onclick="console.log('aaa')">click me</button>
+  <script type="text/javascript">
+    /**
+   * 时间切片
+   * @param gen {generator} 
+   * @return next {function}
+   */
+  const timeSlice = function (gen) {
+    if(typeof gen === 'function') gen = gen()  // 如果传入的是一个函数，运行
+    if(!gen || typeof gen.next !== 'function') return; // 如果运行结果为false 或者不具备生成器的条件 推出
+
+    return function next () {
+      const start = performance.now() // 记录开始执行的时间
+      let res = null
+      do {
+        res = gen.next()
+      } while (!res.done && performance.now() - start < 25) // 当 res.done 也就是生成器 执行完成后 并且 执行时间小于25ms 才不分割任务，否则会一直分割
+
+      if(res.done) return; //如果生成器完成 就退出
+      setTimeout(next,4) // 否则 推入宏任务队列 夹杂在同步任务执行 
+    }
+  }  
+
+  const genOneThousandDiv = function* () {
+    console.time('gen')
+    let total = 500000
+    let fragment = document.createDocumentFragment()
+    for (let i = 0;i < total;i++) {
+      let div = document.createElement('div')
+      fragment.append(div)
+      yield
+    }
+    document.getElementById('targetCont').append(fragment) 
+    console.log('done')
+    console.timeEnd('gen')
+  }
+
+  const oneThousandDiv = function () {
+    let total = 500000
+    let fragment = document.createDocumentFragment()
+    for (let i = 0;i < total;i++) {
+      let div = document.createElement('div')
+      fragment.append(div)
+    }
+    document.getElementById('targetCont').append(fragment)
+  }
+
+  window.onload = function () {
+    let targetCont = document.getElementById('targetCont')
+     
+    // setTimeout(() => {
+    //   console.time('nogen')
+    //   oneThousandDiv()
+    //   console.timeEnd('nogen')
+    // }, 3000); 
+     
+    setTimeout(() => {
+      timeSlice(genOneThousandDiv)()
+    }, 3000);
+    
+    // timeSlice(genOneThousandDiv)()
+     
+  }
+  </script>
+</body>
+</html>
