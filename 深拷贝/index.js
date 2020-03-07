@@ -33,42 +33,55 @@ function deepClone(obj, hash = new WeakMap()){
                               //当此对象的原型被修改时（就是js中实现伪继承的时候），constructor属性会更改
                               //为什么？因为原型也是一个对象，进行赋值操作，constructor肯定是右查询的那个对象的
                               //如果是空对象，那就啥也没有,所以很不安全。
-                              //说实话，我觉得叫self属性比较好，叫tm的constructor，谁都认为是构造属性（有……构造啊之类的）
-                              //总结： 建议废弃
+                              //说实话，我觉得声明为self属性比较好，constructor的话谁都认为是构造属性（由……构造啊之类的）
                               //再看看Object.create 字面意思 我创建个对象 什么对象 obj的原型对象(且保留自身原型的属性) 
                               //create还有第二个属性 可以覆盖原有原型上的属性 这样可以更好的防止屏蔽
   console.log(t)
   hash.set(obj,t)
   console.log(hash)
 
-  for(let key in obj){
+  Reflect.ownKeys(obj).forEach((key) => {
     if(obj.hasOwnProperty(key)){
       t[key] = deepClone(obj[key],hash)
     }
-  }
+  })
+
+  // for(let key in obj){
+  //   if(obj.hasOwnProperty(key)){
+  //     t[key] = deepClone(obj[key],hash)
+  //   }
+  // }
 
   return t
 }
 
 let date = new Date()
-let loop = {}
-let arr = [
-  {
-    name: 'yunrong',
-    age: 21,
-    job: 'front-end',
-    oo: {
-      dream: 'to be myself'
-    }
-  },
-  {
-    now: date
-  }
-]
-arr[0].b = loop
-loop.c = arr[0]
+// let loop = {}
+// let arr = [
+//   {
+//     name: 'yunrong',
+//     age: 21,
+//     job: 'front-end',
+//     oo: {
+//       dream: 'to be myself'
+//     }
+//   },
+//   {
+//     now: date
+//   }
+// ]
+// arr[0].b = loop
+// loop.c = arr[0]
+let sym = Symbol('d')
+let testObj = {
+  a: 'cc',
+  b: 1,
+  c: function(){return 'c'},
+  d: Symbol('d')
+}
+testObj[sym] = 'sym'
 
-let da = deepClone(arr)
+console.log(typeof sym)
+
+let da = deepClone(testObj)
 console.log(da)
-
-arr[0].name = 'liu'

@@ -114,6 +114,7 @@ img{border:0;}
   /*
   *justify-self: start | end | center | stretch
   *align-self: start | end | center | stretch
+  *place-self: justify-self align-self
   */
 }
 .grid-container .b{
