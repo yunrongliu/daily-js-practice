@@ -1,1 +1,0 @@
-const ncname = '[a-zA-Z_][\\w\\-\\.]*'

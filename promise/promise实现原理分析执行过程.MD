@@ -1,146 +1,146 @@
-new a myPromise //Ê×ÏÈµ÷ÓÃ myPromise·½·¨ ´òÓ¡ÁË´Ë²½Öè
-first exec //È»ºóÖ´ĞĞmyPromiseµÄexecutorº¯Êı£¬´òÓ¡ÁËfirst exxec£¬È»ºósetTimeOut´úÂë±»ÍÆÈëÈÎÎñ¶ÓÁĞ×¼±¸Ö´ĞĞ
-pending //È»ºóÊÇp1.then·½·¨£¬ÏÈ´òÓ¡´ËÊ±µÄ×´Ì¬
-myPromise { //´òÓ¡´ËÊ±µÄ¶ÔÏó Îªp1
+new a myPromise //é¦–å…ˆè°ƒç”¨ myPromiseæ–¹æ³• æ‰“å°äº†æ­¤æ­¥éª¤
+first exec //ç„¶åæ‰§è¡ŒmyPromiseçš„executorå‡½æ•°ï¼Œæ‰“å°äº†first exxecï¼Œç„¶åsetTimeOutä»£ç è¢«æ¨å…¥ä»»åŠ¡é˜Ÿåˆ—å‡†å¤‡æ‰§è¡Œ
+pending //ç„¶åæ˜¯p1.thenæ–¹æ³•ï¼Œå…ˆæ‰“å°æ­¤æ—¶çš„çŠ¶æ€
+myPromise { //æ‰“å°æ­¤æ—¶çš„å¯¹è±¡ ä¸ºp1
   status: 'pending',
   resolveCallbackCol: [],
   rejectCallbackCol: [],
   result: null,
   name: 'p1' }
-new a myPromise //ÒòÎªÂú×ãÌõ¼ş£¬ËùÒÔnew ÁËÒ»¸ömyPromise¶ÔÏó£¬ËùÒÔ´òÓ¡ÁËnew¡­¡­  ²¢ÇÒÕâ¸ö¶ÔÏó»á¸³Öµ¸øp2
-beforeResolve   resolveCallbackCol push //½«¶ÔÓ¦µÄº¯ÊıÍÆÈëp1µÄ¶ÓÁĞ
-pending //È»ºóÊÇp2 µÄthen·½·¨ ¼ÌĞø´òÓ¡´ËÊ±µÄthen·½·¨
-new a myPromise //¼ÌĞønew ÁËÒ»¸ö myPromise¶ÔÏó£¬Õâ¸ömyPromise¶ÔÏóÃ»ÓĞ¸³Öµ
-beforeResolve   resolveCallbackCol push //½«¶ÔÓ¦µÄº¯ÊıÍÆÈëp2µÄ¶ÓÁĞ
+new a myPromise //å› ä¸ºæ»¡è¶³æ¡ä»¶ï¼Œæ‰€ä»¥new äº†ä¸€ä¸ªmyPromiseå¯¹è±¡ï¼Œæ‰€ä»¥æ‰“å°äº†newâ€¦â€¦  å¹¶ä¸”è¿™ä¸ªå¯¹è±¡ä¼šèµ‹å€¼ç»™p2
+beforeResolve   resolveCallbackCol push //å°†å¯¹åº”çš„å‡½æ•°æ¨å…¥p1çš„é˜Ÿåˆ—
+pending //ç„¶åæ˜¯p2 çš„thenæ–¹æ³• ç»§ç»­æ‰“å°æ­¤æ—¶çš„thenæ–¹æ³•
+new a myPromise //ç»§ç»­new äº†ä¸€ä¸ª myPromiseå¯¹è±¡ï¼Œè¿™ä¸ªmyPromiseå¯¹è±¡æ²¡æœ‰èµ‹å€¼
+beforeResolve   resolveCallbackCol push //å°†å¯¹åº”çš„å‡½æ•°æ¨å…¥p2çš„é˜Ÿåˆ—
 
-------Í¬²½ÈÎÎñÖ´ĞĞÍê±Ï---------
-------¶ÁÈ¡ÈÎÎñ¶ÓÁĞµÄÈÎÎñ---------
-p1 //´òÓ¡p1
-resolve: _self myPromise { //´òÓ¡´ËÊ±µÄmyPromise¶ÔÏó  Îªp1
+------åŒæ­¥ä»»åŠ¡æ‰§è¡Œå®Œæ¯•---------
+------è¯»å–ä»»åŠ¡é˜Ÿåˆ—çš„ä»»åŠ¡---------
+p1 //æ‰“å°p1
+resolve: _self myPromise { //æ‰“å°æ­¤æ—¶çš„myPromiseå¯¹è±¡  ä¸ºp1
   status: 'pending',
   resolveCallbackCol: [ [Function] ],
   rejectCallbackCol: [ [Function] ],
   result: null,
   name: 'p1' }
-resolve p3 { name: 'p3' } //´òÓ¡´ËÊ± µÄp3
-resolve p1 myPromise { //´òÓ¡´ËÊ±µÄ p1
+resolve p3 { name: 'p3' } //æ‰“å°æ­¤æ—¶ çš„p3
+resolve p1 myPromise { //æ‰“å°æ­¤æ—¶çš„ p1
   status: 'pending',
   resolveCallbackCol: [ [Function] ],
   rejectCallbackCol: [ [Function] ],
   result: null,
   name: 'p1' }
-resolve p2 myPromise { //´òÓ¡´ËÊ±µÄp2
+resolve p2 myPromise { //æ‰“å°æ­¤æ—¶çš„p2
   status: 'pending',
   resolveCallbackCol: [ [Function] ],
   rejectCallbackCol: [ [Function] ],
   result: null,
   name: 'p2' }
------Óöµ½setTimeoutÍÆÈëÈÎÎñ¶ÓÁĞ-----
------´ËÊ±ÎŞÍ¬²½ÈÎÎñ£¬´ÓÈÎÎñ¶ÓÁĞÖĞ¶ÁÈ¡¸Õ²ÅÍÆÈëµÄsetTimeoutÖ´ĞĞ-----
-setTimeout _self myPromise { //´òÓ¡´ËÊ±µÄ¶ÔÏó Îªp1
+-----é‡åˆ°setTimeoutæ¨å…¥ä»»åŠ¡é˜Ÿåˆ—-----
+-----æ­¤æ—¶æ— åŒæ­¥ä»»åŠ¡ï¼Œä»ä»»åŠ¡é˜Ÿåˆ—ä¸­è¯»å–åˆšæ‰æ¨å…¥çš„setTimeoutæ‰§è¡Œ-----
+setTimeout _self myPromise { //æ‰“å°æ­¤æ—¶çš„å¯¹è±¡ ä¸ºp1
   status: 'pending',
   resolveCallbackCol: [ [Function] ],
   rejectCallbackCol: [ [Function] ],
   result: null,
   name: 'p1' }
-[ [Function] ] //´òÓ¡´ËÊ±¶ÔÏóµÄ¶ÓÁĞ 
-//Ö´ĞĞº¯Êı
-nowStatus fulfilled //´òÓ¡´ËÊ±×´Ì¬ Îªfulfilled
-before onResolve _self myPromise { //´òÓ¡ÔÚµ÷ÓÃonResolveÖ®Ç°µÄ¶ÔÏó Îªp1
+[ [Function] ] //æ‰“å°æ­¤æ—¶å¯¹è±¡çš„é˜Ÿåˆ— 
+//æ‰§è¡Œå‡½æ•°
+nowStatus fulfilled //æ‰“å°æ­¤æ—¶çŠ¶æ€ ä¸ºfulfilled
+before onResolve _self myPromise { //æ‰“å°åœ¨è°ƒç”¨onResolveä¹‹å‰çš„å¯¹è±¡ ä¸ºp1
   status: 'fulfilled',
   resolveCallbackCol: [ [Function] ],
   rejectCallbackCol: [ [Function] ],
   result: '111',
   name: 'p1' }
-before onResolve p3 { name: 'p3' } //´òÓ¡ÔÚµ÷ÓÃonResolveÖ®Ç°µÄ p3
-onResolve (data)=> { //´òÓ¡µ±Ç°¶ÔÏó´«Èëthen·½·¨µÄresolveº¯Êı
+before onResolve p3 { name: 'p3' } //æ‰“å°åœ¨è°ƒç”¨onResolveä¹‹å‰çš„ p3
+onResolve (data)=> { //æ‰“å°å½“å‰å¯¹è±¡ä¼ å…¥thenæ–¹æ³•çš„resolveå‡½æ•°
    p3.promise = new myPromise((resolve,reject)=> {
      console.log('ddd',2222)
      resolve('222')
    })
    return p3.promise
  }
-//Ö´ĞĞonResolveº¯Êı£¬²¢½«result´«Èë
-new a myPromise //Ê×ÏÈÓÖnew ÁËÒ»¸ömyPromise¶ÔÏó£¬ËùÒÔ´òÓ¡ÁËnew¡­
-ddd 2222 //Ö´ĞĞexecutorÀïµÄÄÚÈİ ´òÓ¡
-//µ÷ÓÃresolve·½·¨
-resolve: _self myPromise { //´òÓ¡´ËÊ±µÄ¶ÔÏó ÊÇÒ»¸ö³õÊ¼»¯µÄmyPromise ÔÙºóÃæÒª¸³Öµ¸øp3µÄpromiseÊôĞÔ
+//æ‰§è¡ŒonResolveå‡½æ•°ï¼Œå¹¶å°†resultä¼ å…¥
+new a myPromise //é¦–å…ˆåˆnew äº†ä¸€ä¸ªmyPromiseå¯¹è±¡ï¼Œæ‰€ä»¥æ‰“å°äº†newâ€¦
+ddd 2222 //æ‰§è¡Œexecutoré‡Œçš„å†…å®¹ æ‰“å°
+//è°ƒç”¨resolveæ–¹æ³•
+resolve: _self myPromise { //æ‰“å°æ­¤æ—¶çš„å¯¹è±¡ æ˜¯ä¸€ä¸ªåˆå§‹åŒ–çš„myPromise å†åé¢è¦èµ‹å€¼ç»™p3çš„promiseå±æ€§
   status: 'pending',
   resolveCallbackCol: [],
   rejectCallbackCol: [],
   result: null }
-resolve p3 { name: 'p3' } //´òÓ¡´ËÊ±µÄp3¶ÔÏó  ÒòÎª»¹Î´Íê³É¸³Öµ²Ù×÷
-resolve p1 myPromise { //´òÓ¡p1
+resolve p3 { name: 'p3' } //æ‰“å°æ­¤æ—¶çš„p3å¯¹è±¡  å› ä¸ºè¿˜æœªå®Œæˆèµ‹å€¼æ“ä½œ
+resolve p1 myPromise { //æ‰“å°p1
   status: 'fulfilled',
   resolveCallbackCol: [ [Function] ],
   rejectCallbackCol: [ [Function] ],
   result: '111',
   name: 'p1' }
-resolve p2 myPromise { //´òÓ¡p2
+resolve p2 myPromise { //æ‰“å°p2
   status: 'pending',
   resolveCallbackCol: [ [Function] ],
   rejectCallbackCol: [ [Function] ],
   result: null,
   name: 'p2' }
-----Óöµ½setTimeoutÍÆÈëÈÎÎñ¶ÓÁĞ ¶ÓÁĞÖĞÓĞÒ»¸öÈÎÎñ----
-----¼ÌĞøÖ´ĞĞonResolve·½·¨ºóµÄ´úÂë-------
-onResolve next p3 { name: 'p3', //´òÓ¡Ö´ĞĞ¹ıonResolve·½·¨ºóµÄp3£¬ÒòÎªÍê³É¸³Öµ²Ù×÷
+----é‡åˆ°setTimeoutæ¨å…¥ä»»åŠ¡é˜Ÿåˆ— é˜Ÿåˆ—ä¸­æœ‰ä¸€ä¸ªä»»åŠ¡----
+----ç»§ç»­æ‰§è¡ŒonResolveæ–¹æ³•åçš„ä»£ç -------
+onResolve next p3 { name: 'p3', //æ‰“å°æ‰§è¡Œè¿‡onResolveæ–¹æ³•åçš„p3ï¼Œå› ä¸ºå®Œæˆèµ‹å€¼æ“ä½œ
   promise:
    myPromise {
      status: 'pending',
      resolveCallbackCol: [],
      rejectCallbackCol: [],
      result: null } }
-onResolve next p2 myPromise { //´òÓ¡Ö´ĞĞ¹ıonResolve·½·¨ºóµÄp2
+onResolve next p2 myPromise { //æ‰“å°æ‰§è¡Œè¿‡onResolveæ–¹æ³•åçš„p2
   status: 'pending',
   resolveCallbackCol: [ [Function] ],
   rejectCallbackCol: [ [Function] ],
   result: null,
   name: 'p2' }
-onResolve next _self myPromise { //´òÓ¡´ËÊ±µÄ¶ÔÏó Îªp1
+onResolve next _self myPromise { //æ‰“å°æ­¤æ—¶çš„å¯¹è±¡ ä¸ºp1
   status: 'fulfilled',
   resolveCallbackCol: [ [Function] ],
   rejectCallbackCol: [ [Function] ],
   result: '111',
   name: 'p1' }
-onResolve next result myPromise { //´òÓ¡´ËÊ±Ö´ĞĞ¹ıonResolve·½·¨µÄ·µ»ØÖµ£¬ÊÇÒ»¸öpromise
+onResolve next result myPromise { //æ‰“å°æ­¤æ—¶æ‰§è¡Œè¿‡onResolveæ–¹æ³•çš„è¿”å›å€¼ï¼Œæ˜¯ä¸€ä¸ªpromise
   status: 'pending',
   resolveCallbackCol: [],
   rejectCallbackCol: [],
   result: null }
-----Ö´ĞĞdealMyPromise·½·¨------------
-dealMyPromise exec! //´òÓ¡
----- ÒòÎªÊÇÒ»¸ömyPromise¶ÔÏó£¬ËùÒÔµ÷ÓÃ´«ÈëµÄmyPromiseµÄthen·½·¨
-pending //´òÓ¡´ËÊ±µÄ×´Ì¬
-myPromise { //´òÓ¡´ËÊ±µÄ¶ÔÏó ¾ÍÊÇ¸Õ²ÅÖ´ĞĞonResolve·µ»ØµÄresult
+----æ‰§è¡ŒdealMyPromiseæ–¹æ³•------------
+dealMyPromise exec! //æ‰“å°
+---- å› ä¸ºæ˜¯ä¸€ä¸ªmyPromiseå¯¹è±¡ï¼Œæ‰€ä»¥è°ƒç”¨ä¼ å…¥çš„myPromiseçš„thenæ–¹æ³•
+pending //æ‰“å°æ­¤æ—¶çš„çŠ¶æ€
+myPromise { //æ‰“å°æ­¤æ—¶çš„å¯¹è±¡ å°±æ˜¯åˆšæ‰æ‰§è¡ŒonResolveè¿”å›çš„result
   status: 'pending',
   resolveCallbackCol: [],
   rejectCallbackCol: [],
   result: null }
-new a myPromise //ÒòÎª×´Ì¬Îªpending£¬ËùÒÔnew ÁËÒ»¸ömyPromise¶ÔÏó£¬ËùÒÔ´òÓ¡ÁËnew¡­
-beforeResolve   resolveCallbackCol push //½«º¯ÊıÍÆÈë¶ÔÓ¦¶ÓÁĞ
-----Í¬²½´úÂë½áÊø£¬Ö´ĞĞ´ËÊ±ÈÎÎñ¶ÓÁĞÖĞµÄÈÎÎñ£¬´ËÊ±ÈÎÎñ¶ÓÁĞÈÎÎñÊıÁ¿Îª0-----
-setTimeout _self myPromise { //´òÓ¡´ËÊ±µÄ¶ÔÏó£¬»¹ÊÇÄÇ¸öresult
+new a myPromise //å› ä¸ºçŠ¶æ€ä¸ºpendingï¼Œæ‰€ä»¥new äº†ä¸€ä¸ªmyPromiseå¯¹è±¡ï¼Œæ‰€ä»¥æ‰“å°äº†newâ€¦
+beforeResolve   resolveCallbackCol push //å°†å‡½æ•°æ¨å…¥å¯¹åº”é˜Ÿåˆ—
+----åŒæ­¥ä»£ç ç»“æŸï¼Œæ‰§è¡Œæ­¤æ—¶ä»»åŠ¡é˜Ÿåˆ—ä¸­çš„ä»»åŠ¡ï¼Œæ­¤æ—¶ä»»åŠ¡é˜Ÿåˆ—ä»»åŠ¡æ•°é‡ä¸º0-----
+setTimeout _self myPromise { //æ‰“å°æ­¤æ—¶çš„å¯¹è±¡ï¼Œè¿˜æ˜¯é‚£ä¸ªresult
   status: 'pending',
   resolveCallbackCol: [ [Function] ],
   rejectCallbackCol: [ [Function] ],
   result: null }
-[ [Function] ] //´òÓ¡¶ÓÁĞÖĞµÄº¯Êı
-//Ö´ĞĞº¯Êı
-nowStatus fulfilled //´òÓ¡´ËÊ±µÄ×´Ì¬
-before onResolve _self myPromise { //´òÓ¡´ËÊ±µÄ¶ÔÏó£¬resultµÄÖµÎÒÃÇÒ²ÄÃµ½ÁË
+[ [Function] ] //æ‰“å°é˜Ÿåˆ—ä¸­çš„å‡½æ•°
+//æ‰§è¡Œå‡½æ•°
+nowStatus fulfilled //æ‰“å°æ­¤æ—¶çš„çŠ¶æ€
+before onResolve _self myPromise { //æ‰“å°æ­¤æ—¶çš„å¯¹è±¡ï¼Œresultçš„å€¼æˆ‘ä»¬ä¹Ÿæ‹¿åˆ°äº†
   status: 'fulfilled',
   resolveCallbackCol: [ [Function] ],
   rejectCallbackCol: [ [Function] ],
   result: '222' }
-before onResolve p3 { name: 'p3', //´òÓ¡´ËÊ±µÄp3¶ÔÏó
+before onResolve p3 { name: 'p3', //æ‰“å°æ­¤æ—¶çš„p3å¯¹è±¡
   promise:
    myPromise {
      status: 'fulfilled',
      resolveCallbackCol: [ [Function] ],
      rejectCallbackCol: [ [Function] ],
      result: '222' } }
-//²é¿´´ËÊ±µÄonResolveº¯Êı£¬ÆäÊµ¾ÍÊÇÒ»¿ªÊ¼returnµôµÄÄÇ¸ömyPromise¶ÔÏó£¬Ò²¾ÍÊÇp2
+//æŸ¥çœ‹æ­¤æ—¶çš„onResolveå‡½æ•°ï¼Œå…¶å®å°±æ˜¯ä¸€å¼€å§‹returnæ‰çš„é‚£ä¸ªmyPromiseå¯¹è±¡ï¼Œä¹Ÿå°±æ˜¯p2
 onResolve function resolve(value){ 
      console.log('resolve: _self',_self)
      console.log('resolve p3',p3)
@@ -156,99 +156,99 @@ onResolve function resolve(value){
        
      }
    }
-//µ÷ÓÃp2µÄresolve·½·¨£¬²¢½«´ËÊ±¶ÔÏóµÄresult´«Èë£¨Ò²¾ÍÊÇ222£©
-resolve: _self myPromise { //´òÓ¡´ËÊ±µÄ¶ÔÏó Îªp2
+//è°ƒç”¨p2çš„resolveæ–¹æ³•ï¼Œå¹¶å°†æ­¤æ—¶å¯¹è±¡çš„resultä¼ å…¥ï¼ˆä¹Ÿå°±æ˜¯222ï¼‰
+resolve: _self myPromise { //æ‰“å°æ­¤æ—¶çš„å¯¹è±¡ ä¸ºp2
   status: 'pending',
   resolveCallbackCol: [ [Function] ],
   rejectCallbackCol: [ [Function] ],
   result: null,
   name: 'p2' }
-resolve p3 { name: 'p3', //´òÓ¡´ËÊ±µÄp3¶ÔÏó
+resolve p3 { name: 'p3', //æ‰“å°æ­¤æ—¶çš„p3å¯¹è±¡
   promise:
    myPromise {
      status: 'fulfilled',
      resolveCallbackCol: [ [Function] ],
      rejectCallbackCol: [ [Function] ],
      result: '222' } }
-resolve p1 myPromise { //´òÓ¡´ËÊ±µÄp1¶ÔÏó
+resolve p1 myPromise { //æ‰“å°æ­¤æ—¶çš„p1å¯¹è±¡
   status: 'fulfilled',
   resolveCallbackCol: [ [Function] ],
   rejectCallbackCol: [ [Function] ],
   result: '111',
   name: 'p1' }
-resolve p2 myPromise { //´òÓ¡´ËÊ±µÄp2¶ÔÏó
+resolve p2 myPromise { //æ‰“å°æ­¤æ—¶çš„p2å¯¹è±¡
   status: 'pending',
   resolveCallbackCol: [ [Function] ],
   rejectCallbackCol: [ [Function] ],
   result: null,
   name: 'p2' }
------ÒòÎª×´Ì¬Âú×ãpedding£¬Ö´ĞĞsetTimeout£¬ÍÆÈëÈÎÎñ¶ÓÁĞ£¬ÈÎÎñÊıÎª1 ÈÎÎñÎªp2µÄsetTimeout-----
------È»ºó¼ÌĞøÖ´ĞĞonResolveº¯ÊıºóµÄ´úÂë----
-onResolve next p3 { name: 'p3', //´òÓ¡´ËÊ±µÄp3
+-----å› ä¸ºçŠ¶æ€æ»¡è¶³peddingï¼Œæ‰§è¡ŒsetTimeoutï¼Œæ¨å…¥ä»»åŠ¡é˜Ÿåˆ—ï¼Œä»»åŠ¡æ•°ä¸º1 ä»»åŠ¡ä¸ºp2çš„setTimeout-----
+-----ç„¶åç»§ç»­æ‰§è¡ŒonResolveå‡½æ•°åçš„ä»£ç ----
+onResolve next p3 { name: 'p3', //æ‰“å°æ­¤æ—¶çš„p3
   promise:
    myPromise {
      status: 'fulfilled',
      resolveCallbackCol: [ [Function] ],
      rejectCallbackCol: [ [Function] ],
      result: '222' } }
-onResolve next p2 myPromise { //´òÓ¡´ËÊ±µÄp2£¬ÒòÎª±»ÍÆÈëÈÎÎñ¶ÓÁĞ£¬¸³Öµ²Ù×÷»¹Î´½øĞĞ£¬resultÎªnull
+onResolve next p2 myPromise { //æ‰“å°æ­¤æ—¶çš„p2ï¼Œå› ä¸ºè¢«æ¨å…¥ä»»åŠ¡é˜Ÿåˆ—ï¼Œèµ‹å€¼æ“ä½œè¿˜æœªè¿›è¡Œï¼Œresultä¸ºnull
   status: 'pending',
   resolveCallbackCol: [ [Function] ],
   rejectCallbackCol: [ [Function] ],
   result: null,
   name: 'p2' }
-onResolve next _self myPromise { //´òÓ¡´ËÊ±µÄmyPromise¶ÔÏó Îªp3.promise
+onResolve next _self myPromise { //æ‰“å°æ­¤æ—¶çš„myPromiseå¯¹è±¡ ä¸ºp3.promise
   status: 'fulfilled',
   resolveCallbackCol: [ [Function] ],
   rejectCallbackCol: [ [Function] ],
   result: '222' }
-onResolve next result undefined //´òÓ¡´ËÊ±µÄ½á¹û£¬ÒòÎªÎŞ·µ»ØÖµ Îªundefined
-dealMyPromise exec! //Ö´ĞĞdealMyPromise·½·¨
-----ÒòÎª´«ÈëµÄ¶ÔÏóÊÇp3.promise¶ÔÏó£¬´ËÊ±×´Ì¬ÒÑ¾­Îªfulfilled£¬ËùÒÔÖ±½Óresolve-----
-----ÒòÎªresolve·½·¨ÊÇ´«ÈëµÄ£¬ËùÒÔ´ËÊ±µ÷ÓÃresolveº¯ÊıµÄÊ±¶ÔÓ¦p3.thenÊ±Éú³ÉµÄÄäÃûmyPromise¶ÔÏó-----
-resolve: _self myPromise { //´òÓ¡´ËÊ±µÄ¶ÔÏó ¿É¼û²»ÊÇp1 p2 p3
+onResolve next result undefined //æ‰“å°æ­¤æ—¶çš„ç»“æœï¼Œå› ä¸ºæ— è¿”å›å€¼ ä¸ºundefined
+dealMyPromise exec! //æ‰§è¡ŒdealMyPromiseæ–¹æ³•
+----å› ä¸ºä¼ å…¥çš„å¯¹è±¡æ˜¯p3.promiseå¯¹è±¡ï¼Œæ­¤æ—¶çŠ¶æ€å·²ç»ä¸ºfulfilledï¼Œæ‰€ä»¥ç›´æ¥resolve-----
+----å› ä¸ºresolveæ–¹æ³•æ˜¯ä¼ å…¥çš„ï¼Œæ‰€ä»¥æ­¤æ—¶è°ƒç”¨resolveå‡½æ•°çš„æ—¶å¯¹åº”p3.thenæ—¶ç”Ÿæˆçš„åŒ¿åmyPromiseå¯¹è±¡-----
+resolve: _self myPromise { //æ‰“å°æ­¤æ—¶çš„å¯¹è±¡ å¯è§ä¸æ˜¯p1 p2 p3
   status: 'pending',
   resolveCallbackCol: [],
   rejectCallbackCol: [],
   result: null }
-resolve p3 { name: 'p3', //´òÓ¡´ËÊ±µÄp3¶ÔÏó
+resolve p3 { name: 'p3', //æ‰“å°æ­¤æ—¶çš„p3å¯¹è±¡
   promise:
    myPromise {
      status: 'fulfilled',
      resolveCallbackCol: [ [Function] ],
      rejectCallbackCol: [ [Function] ],
      result: '222' } }
-resolve p1 myPromise { //´òÓ¡´ËÊ±µÄp1¶ÔÏó
+resolve p1 myPromise { //æ‰“å°æ­¤æ—¶çš„p1å¯¹è±¡
   status: 'fulfilled',
   resolveCallbackCol: [ [Function] ],
   rejectCallbackCol: [ [Function] ],
   result: '111',
   name: 'p1' }
-resolve p2 myPromise { //´òÓ¡´ËÊ±µÄp2¶ÔÏó
+resolve p2 myPromise { //æ‰“å°æ­¤æ—¶çš„p2å¯¹è±¡
   status: 'pending',
   resolveCallbackCol: [ [Function] ],
   rejectCallbackCol: [ [Function] ],
   result: null,
   name: 'p2' }
-//ÒòÎª´ËÊ±µÄ×´Ì¬Îªpending
-----ÍÆÈëÈÎÎñ¶ÓÁĞ£¬ÈÎÎñÊıÎª2£¬·Ö±ğÊÇp2µÄsetTimeoutºÍÄäÃûmyPromiseµÄsetTimeout---
-----Í¬²½ÈÎÎñÖ´ĞĞÍê±Ï£¬¶ÁÈ¡ÈÎÎñ¶ÓÁĞ´úÂëÖ´ĞĞ Ö´ĞĞµÄÊÇp2µÄsetTimeout£¬´ËÊ±ÈÎÎñ¶ÓÁĞ»¹Ê£Ò»¸ö£¨ÄäÃûmyPromise£©--------
-setTimeout _self myPromise { //¶ÁÈ¡´ËÊ±µÄ¶ÔÏó Îª p2
+//å› ä¸ºæ­¤æ—¶çš„çŠ¶æ€ä¸ºpending
+----æ¨å…¥ä»»åŠ¡é˜Ÿåˆ—ï¼Œä»»åŠ¡æ•°ä¸º2ï¼Œåˆ†åˆ«æ˜¯p2çš„setTimeoutå’ŒåŒ¿åmyPromiseçš„setTimeout---
+----åŒæ­¥ä»»åŠ¡æ‰§è¡Œå®Œæ¯•ï¼Œè¯»å–ä»»åŠ¡é˜Ÿåˆ—ä»£ç æ‰§è¡Œ æ‰§è¡Œçš„æ˜¯p2çš„setTimeoutï¼Œæ­¤æ—¶ä»»åŠ¡é˜Ÿåˆ—è¿˜å‰©ä¸€ä¸ªï¼ˆåŒ¿åmyPromiseï¼‰--------
+setTimeout _self myPromise { //è¯»å–æ­¤æ—¶çš„å¯¹è±¡ ä¸º p2
   status: 'pending',
   resolveCallbackCol: [ [Function] ],
   rejectCallbackCol: [ [Function] ],
   result: null,
   name: 'p2' }
-[ [Function] ] //´òÓ¡¶ÓÁĞÖĞµÄº¯Êı
-//Ö´ĞĞº¯Êı
-nowStatus fulfilled //´òÓ¡ÏÖÔÚµÄ×´Ì¬
-before onResolve _self myPromise { //´òÓ¡ÔÚµ÷ÓÃonResolveÖ®Ç°µÄ ¶ÔÏó 
+[ [Function] ] //æ‰“å°é˜Ÿåˆ—ä¸­çš„å‡½æ•°
+//æ‰§è¡Œå‡½æ•°
+nowStatus fulfilled //æ‰“å°ç°åœ¨çš„çŠ¶æ€
+before onResolve _self myPromise { //æ‰“å°åœ¨è°ƒç”¨onResolveä¹‹å‰çš„ å¯¹è±¡ 
   status: 'fulfilled',
   resolveCallbackCol: [ [Function] ],
   rejectCallbackCol: [ [Function] ],
   result: '222',
   name: 'p2' }
-before onResolve p3 { name: 'p3', //´òÓ¡ÔÚµ÷ÓÃonResolveÖ®Ç°µÄ p3
+before onResolve p3 { name: 'p3', //æ‰“å°åœ¨è°ƒç”¨onResolveä¹‹å‰çš„ p3
   promise:
    myPromise {
      status: 'fulfilled',
@@ -256,72 +256,72 @@ before onResolve p3 { name: 'p3', //´òÓ¡ÔÚµ÷ÓÃonResolveÖ®Ç°µÄ p3
      rejectCallbackCol: [ [Function] ],
      result: '222' } }
 
-onResolve (data)=> { //´òÓ¡p2µÄthen·½·¨ÖĞµÄresolveº¯Êı
+onResolve (data)=> { //æ‰“å°p2çš„thenæ–¹æ³•ä¸­çš„resolveå‡½æ•°
    console.log('ccc',data)
  }
-----Ö´ĞĞ´Ëº¯Êı---------
-ccc 222 //´òÓ¡ccc 222 ÒòÎªÊÇÍ¬²½´úÂë ¼ÌĞøÏòºóÖ´ĞĞ
-onResolve next p3 { name: 'p3',  //´òÓ¡Ö´ĞĞ¹ıonResolve·½·¨ºóµÄp3
+----æ‰§è¡Œæ­¤å‡½æ•°---------
+ccc 222 //æ‰“å°ccc 222 å› ä¸ºæ˜¯åŒæ­¥ä»£ç  ç»§ç»­å‘åæ‰§è¡Œ
+onResolve next p3 { name: 'p3',  //æ‰“å°æ‰§è¡Œè¿‡onResolveæ–¹æ³•åçš„p3
   promise:
    myPromise {
      status: 'fulfilled',
      resolveCallbackCol: [ [Function] ],
      rejectCallbackCol: [ [Function] ],
      result: '222' } }
-onResolve next p2 myPromise { //´òÓ¡Ö´ĞĞ¹ıonResolve·½·¨ºóµÄp2
+onResolve next p2 myPromise { //æ‰“å°æ‰§è¡Œè¿‡onResolveæ–¹æ³•åçš„p2
   status: 'fulfilled',
   resolveCallbackCol: [ [Function] ],
   rejectCallbackCol: [ [Function] ],
   result: '222',
   name: 'p2' }
-onResolve next _self myPromise { //´òÓ¡Ö´ĞĞ¹ıonResolve·½·¨ºóµÄ ¶ÔÏó Îª p2
+onResolve next _self myPromise { //æ‰“å°æ‰§è¡Œè¿‡onResolveæ–¹æ³•åçš„ å¯¹è±¡ ä¸º p2
   status: 'fulfilled',
   resolveCallbackCol: [ [Function] ],
   rejectCallbackCol: [ [Function] ],
   result: '222',
   name: 'p2' }
-onResolve next result undefined //ÒòÎªÎŞ·µ»ØÖµËùÒÔ ´òÓ¡undefined
-dealMyPromise exec! //Ö´ĞĞdealMyPromise·½·¨
-//ÒòÎªÎŞ·µ»ØÖµ£¬ËùÒÔÖ´ĞĞresolve·½·¨
-//ÒòÎªresolve·½·¨ÊÇ´«ÈëµÄ ËùÒÔÊÇp2.thenÊ±¶ÔÓ¦µÄÄäÃûpromiseµÄresolve
-resolve: _self myPromise {  //´òÓ¡´ËÊ±µÄ¶ÔÏó£¬ÊÇÄäÃûpromise¶ÔÏó
+onResolve next result undefined //å› ä¸ºæ— è¿”å›å€¼æ‰€ä»¥ æ‰“å°undefined
+dealMyPromise exec! //æ‰§è¡ŒdealMyPromiseæ–¹æ³•
+//å› ä¸ºæ— è¿”å›å€¼ï¼Œæ‰€ä»¥æ‰§è¡Œresolveæ–¹æ³•
+//å› ä¸ºresolveæ–¹æ³•æ˜¯ä¼ å…¥çš„ æ‰€ä»¥æ˜¯p2.thenæ—¶å¯¹åº”çš„åŒ¿åpromiseçš„resolve
+resolve: _self myPromise {  //æ‰“å°æ­¤æ—¶çš„å¯¹è±¡ï¼Œæ˜¯åŒ¿åpromiseå¯¹è±¡
   status: 'pending',
   resolveCallbackCol: [],
   rejectCallbackCol: [],
   result: null }
-resolve p3 { name: 'p3', //´òÓ¡´ËÊ±µÄp3
+resolve p3 { name: 'p3', //æ‰“å°æ­¤æ—¶çš„p3
   promise:
    myPromise {
      status: 'fulfilled',
      resolveCallbackCol: [ [Function] ],
      rejectCallbackCol: [ [Function] ],
      result: '222' } }
-resolve p1 myPromise { //´òÓ¡´ËÊ±µÄp1
+resolve p1 myPromise { //æ‰“å°æ­¤æ—¶çš„p1
   status: 'fulfilled',
   resolveCallbackCol: [ [Function] ],
   rejectCallbackCol: [ [Function] ],
   result: '111',
   name: 'p1' }
-resolve p2 myPromise { //´òÓ¡´ËÊ±µÄp2
+resolve p2 myPromise { //æ‰“å°æ­¤æ—¶çš„p2
   status: 'fulfilled',
   resolveCallbackCol: [ [Function] ],
   rejectCallbackCol: [ [Function] ],
   result: '222',
   name: 'p2' }
-----Ö´ĞĞÓöµ½setTimeout ÍÆÈëÈÎÎñ¶ÓÁĞ£¬´ËÊ±ÈÎÎñ¶ÓÁĞÈÎÎñÊıÎª2£¬·Ö±ğÊÇÁ©¸öÄäÃûmyPromiseµÄsetTimeout----
-----Í¬²½´úÂëÖ´ĞĞÍê±Ï£¬Ö´ĞĞµÚÒ»¸öÄäÃûmyPromise¶ÔÏóµÄsetTimeout£¬´ËÊ±»¹Ê£Ò»¸ö-----
-setTimeout _self myPromise {//´òÓ¡´ËÊ±µÄ¶ÔÏó ----ÄäÃûmyPromise¶ÔÏó
+----æ‰§è¡Œé‡åˆ°setTimeout æ¨å…¥ä»»åŠ¡é˜Ÿåˆ—ï¼Œæ­¤æ—¶ä»»åŠ¡é˜Ÿåˆ—ä»»åŠ¡æ•°ä¸º2ï¼Œåˆ†åˆ«æ˜¯ä¿©ä¸ªåŒ¿åmyPromiseçš„setTimeout----
+----åŒæ­¥ä»£ç æ‰§è¡Œå®Œæ¯•ï¼Œæ‰§è¡Œç¬¬ä¸€ä¸ªåŒ¿åmyPromiseå¯¹è±¡çš„setTimeoutï¼Œæ­¤æ—¶è¿˜å‰©ä¸€ä¸ª-----
+setTimeout _self myPromise {//æ‰“å°æ­¤æ—¶çš„å¯¹è±¡ ----åŒ¿åmyPromiseå¯¹è±¡
   status: 'pending',
   resolveCallbackCol: [],
   rejectCallbackCol: [],
   result: null }
-[] //´òÓ¡´ËÊ±¶ÔÓ¦µÄ»Øµ÷¶ÓÁĞ
-----Ö´ĞĞ×îºóÒ»¸öÈÎÎñ¶ÓÁĞÖĞµÄÈÎÎñ-------
-setTimeout _self myPromise { //´òÓ¡´ËÊ±µÄ¶ÔÏó -----ÄäÃûmyPromise¶ÔÏó
+[] //æ‰“å°æ­¤æ—¶å¯¹åº”çš„å›è°ƒé˜Ÿåˆ—
+----æ‰§è¡Œæœ€åä¸€ä¸ªä»»åŠ¡é˜Ÿåˆ—ä¸­çš„ä»»åŠ¡-------
+setTimeout _self myPromise { //æ‰“å°æ­¤æ—¶çš„å¯¹è±¡ -----åŒ¿åmyPromiseå¯¹è±¡
   status: 'pending',
   resolveCallbackCol: [],
   rejectCallbackCol: [],
   result: null }
-[] /´òÓ¡´ËÊ±¶ÔÓ¦µÄ»Øµ÷¶ÓÁĞ
-----ÖÁ´Ë£¬´úÂë½áÊø------
+[] /æ‰“å°æ­¤æ—¶å¯¹åº”çš„å›è°ƒé˜Ÿåˆ—
+----è‡³æ­¤ï¼Œä»£ç ç»“æŸ------
 

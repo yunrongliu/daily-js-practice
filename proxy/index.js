@@ -1,14 +1,10 @@
-/**
- * proxy
+/** 
+ * proxy 对象用于定义 对象 基本操作的自定义行为 如属性查找，赋值，枚举，函数调用等
  */
- //代理对象的不存在属性访问
- let handler = {
-   get: function(target,name){
-     return Reflect.get(target,name) ? target[name] : {}
-   }
- }
+ 
 
- let p = new Proxy({},handler)
 
- console.log(p.a)
- console.log(p.b)
+
+
+
+

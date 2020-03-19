@@ -1,41 +1,41 @@
 function myPromise (executor) {
   let self = this
-  self.status = 'pending' //myPromiseµ±Ç°×´Ì¬
-  self.data = undefined //µ±Ç°myPromiseµÄÖµ
-  self.onResolvedCallback = [] //myPromise resolveÊ±µÄ»Øµ÷º¯Êı¼¯ºÏ
-  self.onRejectedCallback = [] //myPromise rejectÊ±µÄ»Øµ÷º¯Êı¼¯ºÏ
+  self.status = 'pending' //myPromiseå½“å‰çŠ¶æ€
+  self.data = undefined //å½“å‰myPromiseçš„å€¼
+  self.onResolvedCallback = [] //myPromise resolveæ—¶çš„å›è°ƒå‡½æ•°é›†åˆ
+  self.onRejectedCallback = [] //myPromise rejectæ—¶çš„å›è°ƒå‡½æ•°é›†åˆ
 
-  function resolve (value) { // value³É¹¦Ì¬Ê±½ÓÊÕµÄÖÕÖµ
+  function resolve (value) { // valueæˆåŠŸæ€æ—¶æ¥æ”¶çš„ç»ˆå€¼
     if (value instanceof myPromise) {
       value.then(resolve, reject)
       return
     }
 
-    // ÎªÊ²Ã´resolve ¼ÓsetTimeout?
-    // 2.2.4¹æ·¶ onFulfilled ºÍ onRejected Ö»ÔÊĞíÔÚ execution context Õ»½ö°üº¬Æ½Ì¨´úÂëÊ±ÔËĞĞ.
-    // ×¢1 ÕâÀïµÄÆ½Ì¨´úÂëÖ¸µÄÊÇÒıÇæ¡¢»·¾³ÒÔ¼° promise µÄÊµÊ©´úÂë¡£Êµ¼ùÖĞÒªÈ·±£ onFulfilled ºÍ onRejected ·½·¨Òì²½Ö´ĞĞ£¬ÇÒÓ¦¸ÃÔÚ then ·½·¨±»µ÷ÓÃµÄÄÇÒ»ÂÖÊÂ¼şÑ­»·Ö®ºóµÄĞÂÖ´ĞĞÕ»ÖĞÖ´ĞĞ¡£
+    // ä¸ºä»€ä¹ˆresolve åŠ setTimeout?
+    // 2.2.4è§„èŒƒ onFulfilled å’Œ onRejected åªå…è®¸åœ¨ execution context æ ˆä»…åŒ…å«å¹³å°ä»£ç æ—¶è¿è¡Œ.
+    // æ³¨1 è¿™é‡Œçš„å¹³å°ä»£ç æŒ‡çš„æ˜¯å¼•æ“ã€ç¯å¢ƒä»¥åŠ promise çš„å®æ–½ä»£ç ã€‚å®è·µä¸­è¦ç¡®ä¿ onFulfilled å’Œ onRejected æ–¹æ³•å¼‚æ­¥æ‰§è¡Œï¼Œä¸”åº”è¯¥åœ¨ then æ–¹æ³•è¢«è°ƒç”¨çš„é‚£ä¸€è½®äº‹ä»¶å¾ªç¯ä¹‹åçš„æ–°æ‰§è¡Œæ ˆä¸­æ‰§è¡Œã€‚
     setTimeout(function(){
-      // µ÷ÓÃresolve »Øµ÷¶ÔÓ¦onFulfilledº¯Êı
+      // è°ƒç”¨resolve å›è°ƒå¯¹åº”onFulfilledå‡½æ•°
       if (self.status === 'pending') {
         console.log('times')
-        // Ö»ÄÜÓÉpending×´Ì¬ => fulfilled×´Ì¬ (±ÜÃâµ÷ÓÃ¶à´Îresolve reject)
+        // åªèƒ½ç”±pendingçŠ¶æ€ => fulfilledçŠ¶æ€ (é¿å…è°ƒç”¨å¤šæ¬¡resolve reject)
         self.status = 'fulfilled'
         self.data = value
-        //Ö´ĞĞresolveµÄ»Øµ÷º¯Êı£¬½«value´«µİµ½callbackÖĞ
+        //æ‰§è¡Œresolveçš„å›è°ƒå‡½æ•°ï¼Œå°†valueä¼ é€’åˆ°callbackä¸­
         console.log(self.onResolvedCallback)
         self.onResolvedCallback.forEach(callback => callback(value))
       }
     })
   }
 
-  function reject (reason) { // reasonÊ§°ÜÌ¬Ê±½ÓÊÕµÄ¾ÜÒò
+  function reject (reason) { // reasonå¤±è´¥æ€æ—¶æ¥æ”¶çš„æ‹’å› 
     setTimeout(function(){
-      // µ÷ÓÃreject »Øµ÷¶ÔÓ¦onRejectedº¯Êı
+      // è°ƒç”¨reject å›è°ƒå¯¹åº”onRejectedå‡½æ•°
       if (self.status === 'pending') {
-        // Ö»ÄÜÓÉpending×´Ì¬ => rejected×´Ì¬ (±ÜÃâµ÷ÓÃ¶à´Îresolve reject)
+        // åªèƒ½ç”±pendingçŠ¶æ€ => rejectedçŠ¶æ€ (é¿å…è°ƒç”¨å¤šæ¬¡resolve reject)
         self.status = 'rejected'
         self.data = reason
-        //Ö´ĞĞrejectµÄ»Øµ÷º¯Êı£¬½«reason´«µİµ½callbackÖĞ
+        //æ‰§è¡Œrejectçš„å›è°ƒå‡½æ•°ï¼Œå°†reasonä¼ é€’åˆ°callbackä¸­
         self.onRejectedCallback.forEach(callback => callback(reason))
       }
     })
@@ -50,47 +50,47 @@ function myPromise (executor) {
 }
 
 /**
- * resolveÖĞµÄÖµ¼¸ÖÖÇé¿ö£º
- * 1.ÆÕÍ¨Öµ
- * 2.promise¶ÔÏó
- * 3.thenable¶ÔÏó/º¯Êı
+ * resolveä¸­çš„å€¼å‡ ç§æƒ…å†µï¼š
+ * 1.æ™®é€šå€¼
+ * 2.promiseå¯¹è±¡
+ * 3.thenableå¯¹è±¡/å‡½æ•°
  */
 
 /**
- * ¶Ôresolve ½øĞĞ¸ÄÔìÔöÇ¿ Õë¶ÔresolveÖĞ²»Í¬ÖµÇé¿ö ½øĞĞ´¦Àí
- * @param  {promise} promise2 promise1.then·½·¨·µ»ØµÄĞÂµÄpromise¶ÔÏó
- * @param  {[type]} x         promise1ÖĞonFulfilledµÄ·µ»ØÖµ
- * @param  {[type]} resolve   promise2µÄresolve·½·¨
- * @param  {[type]} reject    promise2µÄreject·½·¨
+ * å¯¹resolve è¿›è¡Œæ”¹é€ å¢å¼º é’ˆå¯¹resolveä¸­ä¸åŒå€¼æƒ…å†µ è¿›è¡Œå¤„ç†
+ * @param  {promise} promise2 promise1.thenæ–¹æ³•è¿”å›çš„æ–°çš„promiseå¯¹è±¡
+ * @param  {[type]} x         promise1ä¸­onFulfilledçš„è¿”å›å€¼
+ * @param  {[type]} resolve   promise2çš„resolveæ–¹æ³•
+ * @param  {[type]} reject    promise2çš„rejectæ–¹æ³•
  */
 function resolvemyPromise (promise2, x, resolve, reject) {
   let then 
-  let thenCalledOrThrow = false // ±ÜÃâ¶à´Îµ÷ÓÃ
+  let thenCalledOrThrow = false // é¿å…å¤šæ¬¡è°ƒç”¨
 
-  if (promise2 === x) { // Èç¹û´ÓonFulfilledÖĞ·µ»ØµÄx ¾ÍÊÇpromise2 ¾Í»áµ¼ÖÂÑ­»·ÒıÓÃ±¨´í
+  if (promise2 === x) { // å¦‚æœä»onFulfilledä¸­è¿”å›çš„x å°±æ˜¯promise2 å°±ä¼šå¯¼è‡´å¾ªç¯å¼•ç”¨æŠ¥é”™
     reject(new TypeError('Chaining cycle detected for promise!'))
     return
   }
 
-  // Èç¹ûxÊÇÒ»¸öÎÒÃÇ×Ô¼ºĞ´µÄpromise¶ÔÏó 
+  // å¦‚æœxæ˜¯ä¸€ä¸ªæˆ‘ä»¬è‡ªå·±å†™çš„promiseå¯¹è±¡ 
   if (x instanceof myPromise) {
-    if (x.status === 'pending') { // Èç¹ûÎªµÈ´ıÌ¬ĞèµÈ´ıÖ±ÖÁ x ±»Ö´ĞĞ»ò¾Ü¾ø ²¢½âÎövalueÖµ
+    if (x.status === 'pending') { // å¦‚æœä¸ºç­‰å¾…æ€éœ€ç­‰å¾…ç›´è‡³ x è¢«æ‰§è¡Œæˆ–æ‹’ç» å¹¶è§£ævalueå€¼
       x.then(value => {
         resolvemyPromise(promise2, value, resolve, reject)
       }, err => {
         reject(err)
       })
-    }  else { // Èç¹û x ÒÑ¾­´¦ÓÚÖ´ĞĞÌ¬/¾Ü¾øÌ¬(ÖµÒÑ¾­±»½âÎöÎªÆÕÍ¨Öµ)£¬ÓÃÏàÍ¬µÄÖµÖ´ĞĞ´«µİÏÂÈ¥ promise
+    }  else { // å¦‚æœ x å·²ç»å¤„äºæ‰§è¡Œæ€/æ‹’ç»æ€(å€¼å·²ç»è¢«è§£æä¸ºæ™®é€šå€¼)ï¼Œç”¨ç›¸åŒçš„å€¼æ‰§è¡Œä¼ é€’ä¸‹å» promise
       x.then(resolve, reject)
     }
     return
   }
 
-  // Èç¹û x Îª¶ÔÏó»òÕßº¯Êı
+  // å¦‚æœ x ä¸ºå¯¹è±¡æˆ–è€…å‡½æ•°
   if ((x !== null) && ((typeof x === 'function') || (typeof x === 'object'))) {
     try {
       then = x.then //because x.then could be a getter
-      if (typeof then === 'function') { // ÊÇ·ñÊÇthenable¶ÔÏó£¨¾ßÓĞthen·½·¨µÄ¶ÔÏó/º¯Êı£©
+      if (typeof then === 'function') { // æ˜¯å¦æ˜¯thenableå¯¹è±¡ï¼ˆå…·æœ‰thenæ–¹æ³•çš„å¯¹è±¡/å‡½æ•°ï¼‰
         then.call(x, value => {
           if (thenCalledOrThrow) return
           thenCalledOrThrow = true
@@ -102,7 +102,7 @@ function resolvemyPromise (promise2, x, resolve, reject) {
           reject(err)
           return
         })
-      } else { // ËµÃ÷ÊÇÒ»¸öÆÕÍ¨¶ÔÏó/º¯Êı
+      } else { // è¯´æ˜æ˜¯ä¸€ä¸ªæ™®é€šå¯¹è±¡/å‡½æ•°
         resolve(x)
       }
     } catch (e) {
@@ -118,25 +118,25 @@ function resolvemyPromise (promise2, x, resolve, reject) {
 }
 
 /**
- * [×¢²áfulfilled×´Ì¬/rejected×´Ì¬¶ÔÓ¦µÄ»Øµ÷º¯Êı]
- * @param  {function} onFulfilled fulfilled×´Ì¬Ê± Ö´ĞĞµÄº¯Êı
- * @param  {function} onRejected  rejected×´Ì¬Ê± Ö´ĞĞµÄº¯Êı
- * @return {function} newPromsie  ·µ»ØÒ»¸öĞÂµÄpromise¶ÔÏó
+ * [æ³¨å†ŒfulfilledçŠ¶æ€/rejectedçŠ¶æ€å¯¹åº”çš„å›è°ƒå‡½æ•°]
+ * @param  {function} onFulfilled fulfilledçŠ¶æ€æ—¶ æ‰§è¡Œçš„å‡½æ•°
+ * @param  {function} onRejected  rejectedçŠ¶æ€æ—¶ æ‰§è¡Œçš„å‡½æ•°
+ * @return {function} newPromsie  è¿”å›ä¸€ä¸ªæ–°çš„promiseå¯¹è±¡
  */
 myPromise.prototype.then = function (onResolve, onReject) {
   let self = this
   let promise2
 
-  // ´¦Àí²ÎÊıÄ¬ÈÏÖµ ±£Ö¤²ÎÊıºóĞøÄÜ¹»¼ÌĞøÖ´ĞĞ
+  // å¤„ç†å‚æ•°é»˜è®¤å€¼ ä¿è¯å‚æ•°åç»­èƒ½å¤Ÿç»§ç»­æ‰§è¡Œ
   onResolve = typeof onResolve==='function' ? onResolve : function(value){return value}
   onReject = typeof onReject==='function' ? onReject : function(reason){throw reason}
   
   console.log(self.status)
 
-  if (self.status === 'pending') { // µÈ´ıÌ¬
+  if (self.status === 'pending') { // ç­‰å¾…æ€
      return promise2 = new myPromise(function(resolve, reject){
       
-      // µ±Òì²½µ÷ÓÃresolve/rejectedÊ± ½«onFulfilled/onRejectedÊÕ¼¯Ôİ´æµ½¼¯ºÏÖĞ
+      // å½“å¼‚æ­¥è°ƒç”¨resolve/rejectedæ—¶ å°†onFulfilled/onRejectedæ”¶é›†æš‚å­˜åˆ°é›†åˆä¸­
       self.onResolvedCallback.push(function(value){
         try {
           let x = onResolve(value)
@@ -157,39 +157,39 @@ myPromise.prototype.then = function (onResolve, onReject) {
     })
   }
 
-  // thenÀïÃæµÄFULFILLED/REJECTED×´Ì¬Ê± ÎªÊ²Ã´Òª¼ÓsetTimeout ?
-  // Ô­Òò:
-  // ÆäÒ» 2.2.4¹æ·¶ ÒªÈ·±£ onFulfilled ºÍ onRejected ·½·¨Òì²½Ö´ĞĞ(ÇÒÓ¦¸ÃÔÚ then ·½·¨±»µ÷ÓÃµÄÄÇÒ»ÂÖÊÂ¼şÑ­»·Ö®ºóµÄĞÂÖ´ĞĞÕ»ÖĞÖ´ĞĞ) ËùÒÔÒªÔÚresolveÀï¼ÓÉÏsetTimeout
-  // Æä¶ş 2.2.6¹æ·¶ ¶ÔÓÚÒ»¸öpromise£¬ËüµÄthen·½·¨¿ÉÒÔµ÷ÓÃ¶à´Î.£¨µ±ÔÚÆäËû³ÌĞòÖĞ¶à´Îµ÷ÓÃÍ¬Ò»¸öpromiseµÄthenÊ± ÓÉÓÚÖ®Ç°×´Ì¬ÒÑ¾­ÎªFULFILLED/REJECTED×´Ì¬£¬Ôò»á×ßµÄÏÂÃæÂß¼­),ËùÒÔÒªÈ·±£ÎªFULFILLED/REJECTED×´Ì¬ºó Ò²ÒªÒì²½Ö´ĞĞonFulfilled/onRejected
+  // thené‡Œé¢çš„FULFILLED/REJECTEDçŠ¶æ€æ—¶ ä¸ºä»€ä¹ˆè¦åŠ setTimeout ?
+  // åŸå› :
+  // å…¶ä¸€ 2.2.4è§„èŒƒ è¦ç¡®ä¿ onFulfilled å’Œ onRejected æ–¹æ³•å¼‚æ­¥æ‰§è¡Œ(ä¸”åº”è¯¥åœ¨ then æ–¹æ³•è¢«è°ƒç”¨çš„é‚£ä¸€è½®äº‹ä»¶å¾ªç¯ä¹‹åçš„æ–°æ‰§è¡Œæ ˆä¸­æ‰§è¡Œ) æ‰€ä»¥è¦åœ¨resolveé‡ŒåŠ ä¸ŠsetTimeout
+  // å…¶äºŒ 2.2.6è§„èŒƒ å¯¹äºä¸€ä¸ªpromiseï¼Œå®ƒçš„thenæ–¹æ³•å¯ä»¥è°ƒç”¨å¤šæ¬¡.ï¼ˆå½“åœ¨å…¶ä»–ç¨‹åºä¸­å¤šæ¬¡è°ƒç”¨åŒä¸€ä¸ªpromiseçš„thenæ—¶ ç”±äºä¹‹å‰çŠ¶æ€å·²ç»ä¸ºFULFILLED/REJECTEDçŠ¶æ€ï¼Œåˆ™ä¼šèµ°çš„ä¸‹é¢é€»è¾‘),æ‰€ä»¥è¦ç¡®ä¿ä¸ºFULFILLED/REJECTEDçŠ¶æ€å ä¹Ÿè¦å¼‚æ­¥æ‰§è¡ŒonFulfilled/onRejected
 
-  // Æä¶ş 2.2.6¹æ·¶ Ò²ÊÇresolveº¯ÊıÀï¼ÓsetTimeoutµÄÔ­Òò
-  // ×ÜÖ®¶¼ÊÇ ÈÃthen·½·¨Òì²½Ö´ĞĞ Ò²¾ÍÊÇÈ·±£onFulfilled/onRejectedÒì²½Ö´ĞĞ
+  // å…¶äºŒ 2.2.6è§„èŒƒ ä¹Ÿæ˜¯resolveå‡½æ•°é‡ŒåŠ setTimeoutçš„åŸå› 
+  // æ€»ä¹‹éƒ½æ˜¯ è®©thenæ–¹æ³•å¼‚æ­¥æ‰§è¡Œ ä¹Ÿå°±æ˜¯ç¡®ä¿onFulfilled/onRejectedå¼‚æ­¥æ‰§è¡Œ
 
-  // ÈçÏÂÃæÕâÖÖÇé¾° ¶à´Îµ÷ÓÃp1.then
-  // p1.then((value) => { // ´ËÊ±p1.status ÓÉpending×´Ì¬ => fulfilled×´Ì¬
+  // å¦‚ä¸‹é¢è¿™ç§æƒ…æ™¯ å¤šæ¬¡è°ƒç”¨p1.then
+  // p1.then((value) => { // æ­¤æ—¶p1.status ç”±pendingçŠ¶æ€ => fulfilledçŠ¶æ€
   //     console.log(value); // resolve
   //     // console.log(p1.status); // fulfilled
-  //     p1.then(value => { // ÔÙ´Îp1.then ÕâÊ±ÒÑ¾­Îªfulfilled×´Ì¬ ×ßµÄÊÇfulfilled×´Ì¬ÅĞ¶ÏÀïµÄÂß¼­ ËùÒÔÎÒÃÇÒ²ÒªÈ·±£ÅĞ¶ÏÀïÃæonFuilledÒì²½Ö´ĞĞ
+  //     p1.then(value => { // å†æ¬¡p1.then è¿™æ—¶å·²ç»ä¸ºfulfilledçŠ¶æ€ èµ°çš„æ˜¯fulfilledçŠ¶æ€åˆ¤æ–­é‡Œçš„é€»è¾‘ æ‰€ä»¥æˆ‘ä»¬ä¹Ÿè¦ç¡®ä¿åˆ¤æ–­é‡Œé¢onFuilledå¼‚æ­¥æ‰§è¡Œ
   //         console.log(value); // 'resolve'
   //     });
-  //     console.log('µ±Ç°Ö´ĞĞÕ»ÖĞÍ¬²½´úÂë');
+  //     console.log('å½“å‰æ‰§è¡Œæ ˆä¸­åŒæ­¥ä»£ç ');
   // })
-  // console.log('È«¾ÖÖ´ĞĞÕ»ÖĞÍ¬²½´úÂë');
+  // console.log('å…¨å±€æ‰§è¡Œæ ˆä¸­åŒæ­¥ä»£ç ');
   //
-  if (self.status === 'fulfilled') { // ³É¹¦Ì¬
+  if (self.status === 'fulfilled') { // æˆåŠŸæ€
     return promise2 = new myPromise(function(resolve, reject){
       setTimeout(function(){
         try {
           let x = onResolve(self.data)
-          resolvemyPromise(promise2, x, resolve, reject) // ĞÂµÄpromise resolve ÉÏÒ»¸öonFulfilledµÄ·µ»ØÖµ
+          resolvemyPromise(promise2, x, resolve, reject) // æ–°çš„promise resolve ä¸Šä¸€ä¸ªonFulfilledçš„è¿”å›å€¼
         } catch (e) {
-          reject(e) // ²¶»ñÇ°ÃæonFulfilledÖĞÅ×³öµÄÒì³£ then(onFulfilled, onRejected);
+          reject(e) // æ•è·å‰é¢onFulfilledä¸­æŠ›å‡ºçš„å¼‚å¸¸ then(onFulfilled, onRejected);
         }
       },0)
     })
   }
 
-  if (self.status === 'rejected') { // Ê§°ÜÌ¬
+  if (self.status === 'rejected') { // å¤±è´¥æ€
     return promise2 = new myPromise(function(resolve, reject){
       setTimeout(function(){
         try {
@@ -204,10 +204,10 @@ myPromise.prototype.then = function (onResolve, onReject) {
 }
 
 /**
- * myPromise.all myPromise½øĞĞ²¢ĞĞ´¦Àí
- * ²ÎÊı: promise¶ÔÏó×é³ÉµÄÊı×é×÷Îª²ÎÊı
- * ·µ»ØÖµ: ·µ»ØÒ»¸ömyPromiseÊµÀı
- * µ±Õâ¸öÊı×éÀïµÄËùÓĞpromise¶ÔÏóÈ«²¿½øÈëFulFilled×´Ì¬µÄÊ±ºò£¬²Å»áresolve¡£
+ * myPromise.all myPromiseè¿›è¡Œå¹¶è¡Œå¤„ç†
+ * å‚æ•°: promiseå¯¹è±¡ç»„æˆçš„æ•°ç»„ä½œä¸ºå‚æ•°
+ * è¿”å›å€¼: è¿”å›ä¸€ä¸ªmyPromiseå®ä¾‹
+ * å½“è¿™ä¸ªæ•°ç»„é‡Œçš„æ‰€æœ‰promiseå¯¹è±¡å…¨éƒ¨è¿›å…¥FulFilledçŠ¶æ€çš„æ—¶å€™ï¼Œæ‰ä¼šresolveã€‚
  */
 myPromise.all = function (promises) {
   return new myPromise((resolve, reject) => {
@@ -228,9 +228,9 @@ myPromise.all = function (promises) {
 
 /**
  * myPromise.race
- * ²ÎÊı: ½ÓÊÕ promise¶ÔÏó×é³ÉµÄÊı×é×÷Îª²ÎÊı
- * ·µ»ØÖµ: ·µ»ØÒ»¸ömyPromiseÊµÀı
- * Ö»ÒªÓĞÒ»¸öpromise¶ÔÏó½øÈë FulFilled »òÕß Rejected ×´Ì¬µÄ»°£¬¾Í»á¼ÌĞø½øĞĞºóÃæµÄ´¦Àí(È¡¾öÓÚÄÄÒ»¸ö¸ü¿ì)
+ * å‚æ•°: æ¥æ”¶ promiseå¯¹è±¡ç»„æˆçš„æ•°ç»„ä½œä¸ºå‚æ•°
+ * è¿”å›å€¼: è¿”å›ä¸€ä¸ªmyPromiseå®ä¾‹
+ * åªè¦æœ‰ä¸€ä¸ªpromiseå¯¹è±¡è¿›å…¥ FulFilled æˆ–è€… Rejected çŠ¶æ€çš„è¯ï¼Œå°±ä¼šç»§ç»­è¿›è¡Œåé¢çš„å¤„ç†(å–å†³äºå“ªä¸€ä¸ªæ›´å¿«)
  */
 myPromise.race = function (promises) {
   return new myPromise((resolve, reject) => {
@@ -240,17 +240,17 @@ myPromise.race = function (promises) {
   });
 }
 
-// ÓÃÓÚpromise·½·¨Á´Ê± ²¶»ñÇ°ÃæonFulfilled/onRejectedÅ×³öµÄÒì³£
+// ç”¨äºpromiseæ–¹æ³•é“¾æ—¶ æ•è·å‰é¢onFulfilled/onRejectedæŠ›å‡ºçš„å¼‚å¸¸
 myPromise.prototype.catch = function (onReject) {
   return this.then(null, onReject)
 }
 
-// ·µ»ØÒ»¸öfulfilled×´Ì¬µÄpromise¶ÔÏó
+// è¿”å›ä¸€ä¸ªfulfilledçŠ¶æ€çš„promiseå¯¹è±¡
 myPromise.resolve = function (value) {
   return new myPromise(function(resolve, reject){resolve(value)})
 }
 
-// ·µ»ØÒ»¸örejected×´Ì¬µÄpromise¶ÔÏó
+// è¿”å›ä¸€ä¸ªrejectedçŠ¶æ€çš„promiseå¯¹è±¡
 myPromise.reject = function (reason) {
   return new myPromise(function(resolve, reject){reject(reason)})
 }
