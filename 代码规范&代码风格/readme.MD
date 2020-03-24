@@ -1,5 +1,22 @@
 # *前端代码规范*
 
+函数名不要用无语义化的函数名
+
+当函数名过长时可以使用缩写，但是最好在缩写定义时将全称也表示出来
+let methods = {
+  getElByCName: getElementByClassName () {
+
+  }
+}
+
+不要使用中文定义一个函数 和 参数
+比如： getJingWeiData => getLnglatData
+
+相似的变量不要用以下形式来定义
+  data1 data2 arr1 arr2
+
+
+
 ## 常见规范
    1. 使用let const替代var,使用const定义唯一引用,使用let定义变量。并将const let 分组
    2. 不要使用封号(除 return;)

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <button id="button">回放动作</button>
+  <p id="commandList">
+
+  </p>
+  <script src="./index.js"></script>
+  <script type="text/javascript">
+    window.onload = function () {
+      let buttonEl = document.getElementById('button')
+      let commandListEl = document.getElementById('commandList')
+      move.init(buttonEl,(commandInstruction)=> {
+        commandListEl.innerHTML = commandListEl.innerHTML + '<br/>' + commandInstruction
+      })
+    }
+  </script>
+</body>
+</html>
