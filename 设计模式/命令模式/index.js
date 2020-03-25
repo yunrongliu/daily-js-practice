@@ -7,23 +7,47 @@
  // 模拟一个物体运动 
 const move = (function(){
   let commandStack = []
+  let currentStack = []
   
   const moveWayFunc = {
     go() {
-      console.log('go')
-      return 'go'
+
+     return new Promise((resolve)=> {
+      setTimeout(() => {
+        console.log('go')
+        resolve()
+      }, 2000);
+    })
+      // return 'go'
     },
     back() {
-      console.log('back')
-      return 'back'
+      return new Promise((resolve)=> {
+        setTimeout(() => {
+          console.log('back')
+          resolve()
+        }, 2000);
+      })
+      
+      // return 'back'
     },
     up() {
-      console.log('up')
-      return 'up'
+      return new Promise((resolve)=> {
+        setTimeout(() => {
+          console.log('up')
+          resolve()
+        }, 2000);
+      })
+      
+      // return 'up'
     },
     down() {
-      console.log('down')
-      return 'down'
+      return new Promise((resolve)=> {
+        setTimeout(() => {
+          console.log('down')
+          resolve()
+        }, 2000);
+      })
+      // return 'down'
     }
   }
 
@@ -42,24 +66,45 @@ const move = (function(){
 
   const bindBackEvent = function (el,cb) {
     el.addEventListener('click',()=> {
-      while(commandStack.length) {
-        let command = commandStack.shift()
-        let res = command()
-        if(cb) {
-          cb.call(this,res)
-        }
-      }
+      run(commandStack,cb)
     })
   }
 
+  // function* genExec (arr,cb) {
+  //   while(arr.length) {
+  //     let res = yield arr.shift()()
+  //     cb(res.value)
+  //   }
+  // }
+
+ async function run(arr,cb) {
+    // const exec = genExec(arr,cb)
+    // exec.next()
+    while(arr.length) {
+      let res = await arr.shift()()
+      console.log(new Date().getTime())
+      if(cb) {
+        cb(res)
+      } 
+    }
+  }
+
+
   document.onkeypress = function (ev) {
     let keyCode = ev.keyCode
+    if(!keyMap[keyCode]) return;
     let command = makeCommand(moveWayFunc,keyMap[keyCode])
 
     if(command) {
-      command()
+      currentStack.push(command)
       commandStack.push(command)
     }
+
+    if(currentStack.length > 3) {
+      run(currentStack)
+    }
+
+    
   }
 
   const init = function (el,cb) {
